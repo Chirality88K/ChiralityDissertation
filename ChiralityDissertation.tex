@@ -44,7 +44,7 @@
 \pagestyle{plain}
 \hypersetup{colorlinks, bookmarks, unicode} % unicode 
  
-\title{\textbf{Euler Bezier 曲线与Euler B样条曲线}}
+\title{\textbf{Euler B\`{e}zier 曲线与Euler B样条曲线}}
 \author{\bf 王庶霖}
 \date{}
 
@@ -67,16 +67,19 @@ linkcolor=black
 		\noindent{\bf 关键词: }关键词1 关键词2 关键词3 ... 
 		\end{abstract}
 		\newpage  
-		\section{二维Euler Bezier曲线与Euler B样条曲线}
-		\begin{definition}[Euler Bezier曲线]\label{EB_Def}
-			记平面Bezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t), t\in(0,1)$,记 向量$\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到向量$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 如果$\boldsymbol{P}(t)$满足
+		\section{二维Euler B\`{e}zier曲线与Euler B-Spline曲线}
+		\begin{definition}[Euler B\`{e}zier曲线]\label{EB_Def}
+			记平面B\`{e}zier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t), t\in[0,1]$,记 向量$\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到向量$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 如果$\boldsymbol{P}(t)$满足
 			\begin{equation}
 				\begin{aligned}
 					&(1).\quad \Arrowvert\boldsymbol{P}_i\boldsymbol{P}_{i+1}\Arrowvert(i=0,1,\dots,n-1)\text{是定值};\\
 					&(2).\quad\theta_i(i=1,2,\dots,n-1)\text{是等差数列},
 				\end{aligned}
 			\end{equation}
-			则称曲线$\boldsymbol{P}(t)$是Euler Bezier曲线.
+			则称曲线$\boldsymbol{P}(t)$是Euler B\`{e}zier曲线, 其控制多边形称为Euler多边形.
+		\end{definition}
+		\begin{definition}[Euler B-Spline 曲线]\label{Esp_Def}
+			记平面上的$k$阶均匀节点B-Spline曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,k}(t), t\in[t_{k-1},t_{n+1}]$,节点向量$t_i = i\quad(i=0,1,\dots,n+k)$. 如果其控制多边形$\boldsymbol{P}_i$是Euler多边形(见定义(\ref{EB_Def})), 则称曲线$\boldsymbol{P}(t)$是Euler B-Spline曲线.
 		\end{definition}
 		
 		\begin{figure}[htbp]
@@ -94,9 +97,10 @@ linkcolor=black
 		\end{figure}
 		
 		
-		\section{利用Euler Bezier曲线构造G2连续圆角曲线}
-		对于一个给定的多边形, 对转角做圆角处理是非常常见的需求, 传统的方法是使用圆弧, 通过确定圆弧的半径来控制圆角的程度. 由于圆弧是固定曲率的, 这种传统的方法只能构造$G^1$连续的圆角, 使用Euler Bezier曲线则可以构造出$G^2$连续的圆角曲线, 并且可以保证有且仅有一个曲率极值点.\par
-		考虑多边形的一个转角$\boldsymbol{ABC}$, 我们对转角$\boldsymbol{B}$构造圆角曲线. 由于Euler Bezier螺线是曲率单调的, 而多边形的圆角曲线要达到$G^2$连续需要保证两端的曲率为0, 所以我们使用对称的两条Euler Bezier螺线拼接得到圆角曲线. 设圆角曲线的起点$\boldsymbol{P}_S$在边$\boldsymbol{AB}$上, 由于要构造对称的两条曲线, 我们把一边曲线的终点$\boldsymbol{P}_E$取在多边形的内角平分线上. 为保证$G^1$连续, 起点$\boldsymbol{P}_S$处的切方向为向量$\boldsymbol{AB}$的方向, 记为$\boldsymbol{T}_S = \boldsymbol{AB}/\Arrowvert\boldsymbol{AB}\Arrowvert$. 终点$\boldsymbol{P}_E$处的切向$\boldsymbol{T}_E$应当与多边形的内角平分线垂直. 假设Bezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t),t\in[0,1]$插值了这两个边界条件, $\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 那么可以得到
+		\section{利用Euler B\`{e}zier曲线和Euler B-Spline曲线构造G2连续圆角曲线}
+		\subsection{二维Euler B\`{e}zier曲线}
+		对于一个给定的多边形, 对转角做圆角处理是非常常见的需求, 传统的方法是使用圆弧, 通过确定圆弧的半径来控制圆角的程度. 由于圆弧是固定曲率的, 这种传统的方法只能构造$G^1$连续的圆角, 使用Euler B\`{e}zier曲线则可以构造出$G^2$连续的圆角曲线, 并且可以保证有且仅有一个曲率极值点.\par
+		考虑多边形的一个转角$\boldsymbol{ABC}$, 我们对转角$\boldsymbol{B}$构造圆角曲线. 由于Euler B\`{e}zier螺线是曲率单调的, 而多边形的圆角曲线要达到$G^2$连续需要保证两端的曲率为0, 所以我们使用对称的两条Euler B\`{e}zier螺线拼接得到圆角曲线. 设圆角曲线的起点$\boldsymbol{P}_S$在边$\boldsymbol{AB}$上, 由于要构造对称的两条曲线, 我们把一边曲线的终点$\boldsymbol{P}_E$取在多边形的内角平分线上. 为保证$G^1$连续, 起点$\boldsymbol{P}_S$处的切方向为向量$\boldsymbol{AB}$的方向, 记为$\boldsymbol{T}_S = \boldsymbol{AB}/\Arrowvert\boldsymbol{AB}\Arrowvert$. 终点$\boldsymbol{P}_E$处的切向$\boldsymbol{T}_E$应当与多边形的内角平分线垂直. 假设Bezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t),t\in[0,1]$插值了这两个边界条件, $\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 那么可以得到
 		\begin{equation}
 			\prod_{i=1}^{n-1}\text{R}(\theta_i)\boldsymbol{T}_S =  \boldsymbol{T}_E
 		\end{equation}
@@ -128,18 +132,18 @@ linkcolor=black
 		 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 		 	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 		 	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-		 	\caption{Euler Bezier圆角}\label{smoothcurve1}
+		 	\caption{Euler B\`{e}zier圆角}\label{smoothcurve1}
 		 	\KwData{ 构成Corner的三个顶点$\boldsymbol{A},\boldsymbol{B},\boldsymbol{C}$, $\boldsymbol{BP}_S$的长度$L_S$或$\boldsymbol{BP}_E$的长度$L_E$}
 		 	\KwResult{
 		 	Bezier曲线$\boldsymbol{P}(t)$的控制顶点序列$\boldsymbol{P}_0,\boldsymbol{P}_1,\dots,\boldsymbol{P}_n$和对称的顶点序列}
 		 	\BlankLine 
 		 	 $n=4$\;
-		 	 \bf{初始化Bezier曲线}$\boldsymbol{P}(t)$\;
+		 	 \bf{初始化B\`{e}zier曲线}$\boldsymbol{P}(t)$\;
 		 	$\boldsymbol{T}_S = \text{Normalize}(\boldsymbol{B}-\boldsymbol{P}_S)$\;
 		 	$\boldsymbol{D}=\boldsymbol{T}_S$\;
 		 	$\boldsymbol{temp}=\boldsymbol{T}_S$\;
 		 	
-		 	\While{\text{EulerBezierSpiralCheck}($\boldsymbol{P}(t)$)==\text{FALSE} and $n < 20$}{
+		 	\While{\text{EulerB\`{e}zierSpiralCheck}($\boldsymbol{P}(t)$)==\text{FALSE} and $n < 20$}{
 	计算$\boldsymbol{A}\boldsymbol{B}$与$\boldsymbol{B}\boldsymbol{C}$的夹角$\alpha$\;
 		 	$\Delta\theta = \frac{\alpha}{ (n - 2)  (n - 1)}$\;
 		 	\For{$i=0,1,\dots,n-2$}{
@@ -168,87 +172,15 @@ linkcolor=black
 		 		\centering
 		 		\includegraphics[width=0.9\linewidth]{figures/SmoothCorner2.png}
 		 	\end{minipage}
-		 	\caption{算法($\ref{smoothcurve1}$)得到的$G^2$连续Euler Bezier螺线圆角}
+		 	\caption{算法($\ref{smoothcurve1}$)得到的$G^2$连续Euler B\`{e}zier螺线圆角}
 		 \end{figure}
-		\subsection{问题背景}
-		\subsection{题目重述}
-		题设条件如下：
-		\begin{itemize} % 这是一个无序枚举
-			\item
-			\item 
-		\end{itemize}
+	 \subsection{二维Euler B-Spline曲线}
+	 \section{三维Euler B\`{e}zier 曲线与Euler B-Spline 曲线}
+	 \subsection{二维到三维的方法}
+	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明
+	 \subsection{三维Euler B\`{e}zier 曲线}
+	 \subsection{三维Euler B-Spline 曲线}
 		
-		\begin{enumerate}[itemsep=0pt, parsep=0pt, label=(\arabic*)] % 这是一个带标签的枚举
-			\item 
-			\item 
-			\item 
-		\end{enumerate}
-
-		\section{问题分析}
-
-		\subsection{问题一的分析}
-
-		\subsection{问题二的分析}
-
-		\subsection{问题三的分析}
-
-		\section{模型假设}
-
-		\section{符号说明}
-		下表列出了本文需要的符号以及单位等信息。
-		\begin{longtable}[htbp!]{l|lllll} % 这是一个三线表
-		\toprule
-		符号&解释&\\
-		\midrule
-		$x$&解释1\\
-		$x$&解释2\\
-		$x$&解释3\\
-		$x$&解释4\\
-		$x$&解释5\\
-		\bottomrule
-		\end{longtable}
-
-		\section{模型建立}
-		\subsection{参数的确定}
-		\subsection{模型的确立}
-		\section{问题的求解与检验}
-		\subsection{数据预处理}
-			这是一个普通表格
-			\begin{center}
-			\begin{tabular}{|c|c|c|c|c|c|} % 表格环境
-			\hline 
-			{}&帅气&智慧&可爱&头发有没有&吃的多不多\\
-			\hline  
-			本人&$\surd$&$\surd$&$\surd$&$\surd$&$\surd$\\
-			\hline
-			A&$\surd$&$\surd$&$\surd$&$\surd$&$\surd$\\
-			\hline
-			B&$\surd$&$\surd$&$\surd$&$\surd$&$\surd$\\
-			\hline
-			C&{}&$\surd$&$\surd$&$\surd$&$\surd$\\
-			\hline
-			D&$\surd$&{}&{}&{}&{}\\
-			\hline
-			\end{tabular}
-			\end{center}
-		\subsection{问题一的求解}
-			这是一个图片
-			\begin{figure}[H] % 图片环境
-			\centering
-			\includegraphics[scale=0.6]{figures/1.png}
-			\caption{挺秃然的}
-			\label{fig:label}
-			\end{figure}
-
-			这是一坨公式
-			\begin{align} % 公式环境
-			&y+1=a(x+1)^b\\
-			&y+1=\frac{b}{(x+1)}\\
-			&y+1=a+b\ln(x+1)
-			\end{align}
-
-		\subsection{问题二的求解}
-		\subsection{问题三的求解}
 		
 		\renewcommand\refname{参考文献}
 		\addcontentsline{toc}{section}{参考文献}
