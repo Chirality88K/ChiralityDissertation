@@ -44,7 +44,7 @@
 \pagestyle{plain}
 \hypersetup{colorlinks, bookmarks, unicode} % unicode 
  
-\title{\textbf{Euler B\`{e}zier 曲线与Euler B样条曲线}}
+\title{\textbf{Euler B\`{e}zier 曲线与Euler B-Spline曲线}}
 \author{\bf 王庶霖}
 \date{}
 
@@ -100,11 +100,11 @@ linkcolor=black
 		\section{利用Euler B\`{e}zier曲线和Euler B-Spline曲线构造G2连续圆角曲线}
 		\subsection{二维Euler B\`{e}zier曲线}
 		对于一个给定的多边形, 对转角做圆角处理是非常常见的需求, 传统的方法是使用圆弧, 通过确定圆弧的半径来控制圆角的程度. 由于圆弧是固定曲率的, 这种传统的方法只能构造$G^1$连续的圆角, 使用Euler B\`{e}zier曲线则可以构造出$G^2$连续的圆角曲线, 并且可以保证有且仅有一个曲率极值点.\par
-		考虑多边形的一个转角$\boldsymbol{ABC}$, 我们对转角$\boldsymbol{B}$构造圆角曲线. 由于Euler B\`{e}zier螺线是曲率单调的, 而多边形的圆角曲线要达到$G^2$连续需要保证两端的曲率为0, 所以我们使用对称的两条Euler B\`{e}zier螺线拼接得到圆角曲线. 设圆角曲线的起点$\boldsymbol{P}_S$在边$\boldsymbol{AB}$上, 由于要构造对称的两条曲线, 我们把一边曲线的终点$\boldsymbol{P}_E$取在多边形的内角平分线上. 为保证$G^1$连续, 起点$\boldsymbol{P}_S$处的切方向为向量$\boldsymbol{AB}$的方向, 记为$\boldsymbol{T}_S = \boldsymbol{AB}/\Arrowvert\boldsymbol{AB}\Arrowvert$. 终点$\boldsymbol{P}_E$处的切向$\boldsymbol{T}_E$应当与多边形的内角平分线垂直. 假设Bezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t),t\in[0,1]$插值了这两个边界条件, $\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 那么可以得到
+		考虑多边形的一个转角$\boldsymbol{ABC}$, 向量$\boldsymbol{AB}$到向量$\boldsymbol{BC}$的旋转角为$\alpha, |\alpha|\in(0,\pi)$, 我们对转角$\boldsymbol{B}$构造圆角曲线. 由于Euler B\`{e}zier螺线是曲率单调的, 而多边形的圆角曲线要达到$G^2$连续需要保证两端的曲率为0, 所以我们使用对称的两条Euler B\`{e}zier螺线拼接得到圆角曲线. 设圆角曲线的起点$\boldsymbol{P}_S$在边$\boldsymbol{AB}$上, 由于要构造对称的两条曲线, 我们把一边曲线的终点$\boldsymbol{P}_E$取在多边形的内角平分线上. 为保证$G^1$连续, 起点$\boldsymbol{P}_S$处的切方向为向量$\boldsymbol{AB}$的方向, 记为$\boldsymbol{T}_S = \boldsymbol{AB}/\Arrowvert\boldsymbol{AB}\Arrowvert$. 终点$\boldsymbol{P}_E$处的切向$\boldsymbol{T}_E$应当与多边形的内角平分线垂直. 假设B\`ezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t),t\in[0,1]$插值了这两个边界条件, $\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 那么可以得到
 		\begin{equation}
 			\prod_{i=1}^{n-1}\text{R}(\theta_i)\boldsymbol{T}_S =  \boldsymbol{T}_E
 		\end{equation}
-		其中$\text{R}(\theta)$表示旋转角为$\theta$的旋转矩阵. 根据定义($\ref{EB_Def}$), $\theta_i$应当为等差数列. 考虑Bezier曲线的起点曲率$$\kappa(0)=\frac{n-1}{n}\frac{\sin(\theta_1)}{l}$$
+		其中$\text{R}(\theta)$表示旋转角为$\theta$的旋转矩阵. 根据定义($\ref{EB_Def}$), $\theta_i$应当为等差数列. 考虑B\`ezier曲线的起点曲率$$\kappa(0)=\frac{n-1}{n}\frac{\sin(\theta_1)}{l}$$
 		保证$G^2$连续要令$\kappa(0)=0$, 则有$\theta_1=0$, 故设$\theta_i=(i-1)\Delta\theta(i=1,\dots,n-1)$, 为了保证对称性, $\boldsymbol{T}_E$应当与多边形内角平分线垂直, 则$\boldsymbol{T}_S$到$\boldsymbol{T}_E$的夹角为$\alpha/2$, 所以有
 		\begin{equation}
 			\sum_{i=1}^{n-1}\theta_i = \frac{(n-2)(n-1)}2\Delta\theta = \frac{\alpha}2
@@ -122,11 +122,12 @@ linkcolor=black
 		\begin{equation}
 			\boldsymbol{P}_S\boldsymbol{P}_E = \sum_{i=0}^{n-1}\boldsymbol{P}_i\boldsymbol{P}_{i+1} = l[\sum_{i=0}^{n-1}\text{R}(\phi_i)]\boldsymbol{T}_S
 		\end{equation}
-		其中$\phi_i=\sum_{j=1}^i\theta_j (i = 1,\dots,n-1), \phi_0 = 0$. 对于一个给定正整数$n$, 我们可以计算出向量$\boldsymbol{D} = \sum_{i=0}^{n-1}\text{R}(\phi_i)\boldsymbol{T}_S$, 这是一个常向量, 从起点到终点的连线必须与它平行. 将向量$\boldsymbol{D}$与向量$\boldsymbol{T}_S$的夹角记为$\beta$, 则有
+		其中$\phi_i=\sum_{j=1}^i\theta_j (i = 1,\dots,n-1), \phi_0 = 0$. 对于一个给定正整数$n$, 我们可以计算出向量$\boldsymbol{D} = \sum_{i=0}^{n-1}\text{R}(\phi_i)\boldsymbol{T}_S$, 这是一个常向量, 从起点到终点的连线必须与它平行. 将向量$\boldsymbol{D}$与向量$\boldsymbol{T}_S$的夹角记为$\beta$(注意$\beta$也是有符号角, 应当与$\alpha$符号相同), 则有
 		\begin{equation}\label{sinthoery}
 			\frac{\Arrowvert\boldsymbol{OP}_S\Arrowvert}{\cos(\frac{\alpha}2-\beta)}=\frac{\Arrowvert\boldsymbol{OP}_E\Arrowvert}{\sin(\beta)}=\frac{\Arrowvert\boldsymbol{P}_S\boldsymbol{P}_E\Arrowvert}{\cos(\frac{\alpha}2)}
 		\end{equation}
-		根据方程$(\ref{sinthoery})$, 我们可以在给定圆角起点$\boldsymbol{P}_S$或者给定角平分线上的经过点$\boldsymbol{P}_E$时唯一求得离散的Euler螺线.
+		根据方程$(\ref{sinthoery})$, 我们可以在给定圆角起点$\boldsymbol{P}_S$或者给定角平分线上的经过点$\boldsymbol{P}_E$时求得唯一的Euler多边形, 以它们为控制顶点的B\`{e}zier曲线即为一半的Euler B\`{e}zier圆角曲线. 再将该曲线沿着转角的平分线作对称变换即可得到另一半圆角曲线, 该算法的伪代码实现见Algorithm \ref{smoothcurve1}.\par 
+		图\ref{EB_figure}是对正六边形(黑色直线段)应用Algorithm \ref{smoothcurve1}的结果, 六个圆角曲线(品红色)的圆角起点与终点都是六边形边的三等分点. 图中的浅蓝色曲率梳表明了该圆角的$G^2$连续性, 并且每一个圆角曲线自身对称, 有且仅有一个曲率极值点, 位于对称轴上.
 		\IncMargin{1em}
 		 \begin{algorithm}
 		 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
@@ -163,7 +164,7 @@ linkcolor=black
 		 \end{algorithm}
 		 \begin{figure}[htbp]
 		 	\centering
-		 	\begin{minipage}{0.49\linewidth}
+		 	\begin{minipage}{0.49\linewidth}{\label{EB_figure}}
 		 		\centering
 		 		\includegraphics[width=0.9\linewidth]{figures/SmoothCorner1.png}
 		 	\end{minipage}
@@ -175,6 +176,62 @@ linkcolor=black
 		 	\caption{算法($\ref{smoothcurve1}$)得到的$G^2$连续Euler B\`{e}zier螺线圆角}
 		 \end{figure}
 	 \subsection{二维Euler B-Spline曲线}
+	 利用二维Euler B-Spline曲线构造圆角大体与B\`{e}zier曲线的构造一致, 只有一些细节的不同. 我们使用常用的四阶(三次)均匀B-Spline, 设所求曲线为$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,4}(t)$, 节点向量为$t_j = j,j=0,1,\dots,n+4$. 事实上, 控制多边形$\boldsymbol{P}_i$仍然要为Euler多边形, 它的构造思路与B\`{e}zier曲线的构造一致, 唯一变化的是边界条件.\par 
+	 在Euler B\`{e}zier圆角的构造中, 我们将起点$\boldsymbol{P}_0$设置在圆角起点$\boldsymbol{P}_S$上, 我们令向量$\boldsymbol{P}_0\boldsymbol{P}_1$与$\boldsymbol{T}_S$同向, 令$\boldsymbol{P}_0$$\boldsymbol{P}_1$$\boldsymbol{P}_2$三点共线, 这些都是基于B\`{e}zier曲线的端点各阶导数与控制顶点的关系得到的. 而对于所求的均匀节点B-Spline曲线$\boldsymbol{P}(t)$, $t\in[3,n+1]$, 我们有
+	 \begin{equation}
+	 \begin{aligned}
+	 &\boldsymbol{P}(3)=\frac{\boldsymbol{P}_0+4\boldsymbol{P}_1+\boldsymbol{P}_2}6\\
+	 &\boldsymbol{P}'(3)=\frac{\boldsymbol{P}_2-\boldsymbol{P}_0}2\\
+	 &\boldsymbol{P}''(3)=\boldsymbol{P}_0-2\boldsymbol{P}_1+\boldsymbol{P}_2
+	 \end{aligned}
+	 \end{equation}
+	 为满足$G^2$连续条件, 必须有
+	 \begin{equation}\label{EBS_condition}
+	 \begin{aligned}
+	 &\frac{\boldsymbol{P}_0+4\boldsymbol{P}_1+\boldsymbol{P}_2}6=\boldsymbol{P}_S\\
+	 &\boldsymbol{P}_2-\boldsymbol{P}_0=\lambda\boldsymbol{T}_S\text{, for some }\lambda>0\\
+	 &\boldsymbol{P}_0\boldsymbol{P}_2\times(\boldsymbol{P}_1\boldsymbol{P}_2-\boldsymbol{P}_0\boldsymbol{P}_1)=\boldsymbol{0}
+	 \end{aligned}
+	 \end{equation}
+	 第三个条件等价于$\boldsymbol{P}_0\boldsymbol{P}_2\times\boldsymbol{P}_0\boldsymbol{P}_1=\boldsymbol{0}$, 所以等式成立当且仅当$\boldsymbol{P}_0,\boldsymbol{P}_1$与$\boldsymbol{P}_2$三点共线. 注意到Euler多边形各边等长,  故方程(\ref{EBS_condition})的解为
+	 \begin{equation}\label{Solution}
+	 \left\{
+	 \begin{aligned}
+	 &\boldsymbol{P}_0 = \boldsymbol{P}_S-l\boldsymbol{T}_S\\
+	 &\boldsymbol{P}_1 = \boldsymbol{P}_S\\
+	 &\boldsymbol{P}_2 = \boldsymbol{P}_S+l\boldsymbol{T}_S
+	 \end{aligned}
+	 \right.
+	 \end{equation}
+	 其中$l>0$为多边形的边长.\par 
+	 另外$\Delta\theta$与常向量$\boldsymbol{D}$的定义也会发生变化, 由于终点的导数为
+	 \begin{equation}
+	 \boldsymbol{P}'(n+1) = \frac{\boldsymbol{P}_n-\boldsymbol{P}_{n-2}}2
+	 \end{equation}
+	 所以$\theta_i$与$\alpha$的关系变为
+	 \begin{equation}
+	 \sum_{i=2}^{n-2}\theta_i+\frac12\theta_{n-1}=\frac{\alpha}2
+	 \end{equation}
+	 结合$\theta_i=(i-1)\Delta\theta$, 得到
+	 \begin{equation}
+	 \Delta\theta = \frac{\alpha}{(n-2)^2}
+	 \end{equation}
+	 记$\phi_i=\sum_{j=1}^i\theta_j (i = 1,\dots,n-1), \phi_0 = 0$. 可以表示控制多边形每一个顶点的坐标
+	 \begin{equation}\label{recursive_bspline}
+	 \boldsymbol{P}_k = \boldsymbol{P}_0+l\sum_{i=0}^{k-1}\text{R}(\phi_i)\boldsymbol{T}_S,\quad k\geq1
+	 \end{equation}
+	 根据终点处的边界条件
+	 \begin{equation}\label{bspline_condition}
+	 \boldsymbol{P}_E = \frac{1}6(\boldsymbol{P}_{n-2}+4\boldsymbol{P}_{n-1}+\boldsymbol{P}_n)
+	 \end{equation}
+	结合式(\ref{recursive_bspline}), (\ref{bspline_condition})和(\ref{Solution})得到
+	\begin{equation}
+	\boldsymbol{P}_S\boldsymbol{P}_E=l[\frac16(\boldsymbol{D}_{n-2}+4\boldsymbol{D}_{n-1}+\boldsymbol{D}_n)-\boldsymbol{T}_S]
+	\end{equation}
+	其中\begin{equation}
+	\boldsymbol{D}_k = \sum_{i=0}^{k-1}\text{R}(\phi_i)\boldsymbol{T}_S,\quad k=1,\dots,n
+	\end{equation}
+	对于给定的n, 每个$\boldsymbol{D}_k$都是定值, 最后我们求解$l$, 只需要和B\`ezier的方法类似, 确定了$\boldsymbol{P}_S$或$\boldsymbol{P}_E$的位置后, 通过求解三角形得到$\boldsymbol{P}_S\boldsymbol{P}_E$的长即可.
 	 \section{三维Euler B\`{e}zier 曲线与Euler B-Spline 曲线}
 	 \subsection{二维到三维的方法}
 	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明
