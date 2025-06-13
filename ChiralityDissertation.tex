@@ -273,21 +273,16 @@ linkcolor=black
 	 	\begin{equation}
 	 		\begin{aligned}
 	 		(1).\quad &\theta_i-2\theta_{i+1}+\theta_{i+2} = 0,\quad i=0,1,\dots,n-4\\
-	 		(2).\quad &\phi_i-2\phi_{i+1}+\phi_{i+2} = 0,\quad i=0,1,\dots,n-4
+	 		(2).\quad &\phi_i-2\phi_{i+1}+\phi_{i+2} = 0,\quad i=0,1,\dots,n-4\\
+	 		(3).\quad &\text{所有边长}\Arrowvert\boldsymbol{v_i}\Arrowvert\text{相等} 
 	 		\end{aligned}
 	 	\end{equation}
 	 	则称$\boldsymbol{P}_0,\dots,\boldsymbol{P}_n$是三维Euler多边形.
 	 \end{definition}
 	 由三维Euler多边形作为控制顶点生成的B\`ezier曲线或整数节点B样条曲线称为三维Euler B\`ezier曲线或三维Euler B-Spline曲线. \par 
-	 假定有三维$G^1$条件: 起点$\boldsymbol{P}_S$, 终点$\boldsymbol{P}_E$, 以及起点终点切向$\boldsymbol{T}_S$, $\boldsymbol{T}_E$, 其中$\boldsymbol{T}_S$, $\boldsymbol{T}_E$是单位向量, 并且与起点指向终点的向量$\boldsymbol{P}_S\boldsymbol{P}_E$, 三个向量异面. 现有的一些方法是先选取一个平面构造一个平面螺线, 然后通过一些迭代计算来逼近目标的$G^1$条件. 我们选取平面的依据是该平面应当满足与$\boldsymbol{T}_S$和$\boldsymbol{T}_E$夹角一致, 并且平面要经过$\boldsymbol{P}_S$和$\boldsymbol{P}_E$. 我们把这个平面叫做中间平面$\mathcal{P}$. 平面$\mathcal{P}$的单位法向量记为$\boldsymbol{n}_\mathcal{P}$, 则$\boldsymbol{n}_\mathcal{P}$应当满足: 
-	 \begin{equation}
-	 	\boldsymbol{n}_\mathcal{P}\cdot\boldsymbol{T}_S+\boldsymbol{n}_\mathcal{P}\cdot\boldsymbol{T}_E = 0, 
-	 \end{equation} 
-	 对于不共线的$\boldsymbol{T}_S$, $\boldsymbol{T}_E$, 该方程有且唯一的单位向量解, 则平面$\mathcal{P}$上的任意一点$\boldsymbol{P}$满足方程:
-	 \begin{equation}
-	 	(\boldsymbol{P}-\frac{\boldsymbol{P}_S+\boldsymbol{P}_E}2)\cdot\boldsymbol{n}_\mathcal{P} = 0
-	 \end{equation}
+	 假定有三维$G^1$条件: 起点$\boldsymbol{P}_S$, 终点$\boldsymbol{P}_E$, 以及起点终点切向$\boldsymbol{T}_S$, $\boldsymbol{T}_E$, 其中$\boldsymbol{T}_S$, $\boldsymbol{T}_E$是单位向量, 并且与起点指向终点的向量$\boldsymbol{P}_S\boldsymbol{P}_E$, 三个向量异面. 对于这样的$G^1$条件, 直接构造严格满足定义(\ref{EP3D_Def})的曲线是行不通的, 事实上在二维情况下都是不可行的, 所以我们依然使用一种非线性细分的方法对初始多边形进行迭代, 使其逐渐逼近三维的Euler多边形, 当然没有理论保证对于任意的边值条件都存在满足定义(\ref{EP3D_Def})的多边形, 但是如果这样的多边形存在, 我们的方法可以很好的逼近出这样的多边形, 以它们作为控制顶点的B\`ezier和B-Spline曲线是曲率单调的.
 	 \subsection{三维Euler B\`{e}zier 曲线}
+	 对于一般的三维$G^1$边值条件, 我们先作刚体变换使得起点$\boldsymbol{P}_S$位于原点, 初始切向变换为x轴正向的单位向量$(1,0,0)$并且终点的端切向与xOy平面平行, 这样的变换是非常容易的, 只需要一次平移和旋转即可. 
 	 \subsection{三维Euler B-Spline 曲线}
 		
 		
