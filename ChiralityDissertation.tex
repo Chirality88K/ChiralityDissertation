@@ -282,7 +282,26 @@ linkcolor=black
 	 由三维Euler多边形作为控制顶点生成的B\`ezier曲线或整数节点B样条曲线称为三维Euler B\`ezier曲线或三维Euler B-Spline曲线. \par 
 	 假定有三维$G^1$条件: 起点$\boldsymbol{P}_S$, 终点$\boldsymbol{P}_E$, 以及起点终点切向$\boldsymbol{T}_S$, $\boldsymbol{T}_E$, 其中$\boldsymbol{T}_S$, $\boldsymbol{T}_E$是单位向量, 并且与起点指向终点的向量$\boldsymbol{P}_S\boldsymbol{P}_E$, 三个向量异面. 对于这样的$G^1$条件, 直接构造严格满足定义(\ref{EP3D_Def})的曲线是行不通的, 事实上在二维情况下都是不可行的, 所以我们依然使用一种非线性细分的方法对初始多边形进行迭代, 使其逐渐逼近三维的Euler多边形, 当然没有理论保证对于任意的边值条件都存在满足定义(\ref{EP3D_Def})的多边形, 但是如果这样的多边形存在, 我们的方法可以很好的逼近出这样的多边形, 以它们作为控制顶点的B\`ezier和B-Spline曲线是曲率单调的.
 	 \subsection{三维Euler B\`{e}zier 曲线}
-	 对于一般的三维$G^1$边值条件, 我们先作刚体变换使得起点$\boldsymbol{P}_S$位于原点, 初始切向变换为x轴正向的单位向量$(1,0,0)$并且终点的端切向与xOy平面平行, 这样的变换是非常容易的, 只需要一次平移和旋转即可. 
+	 对于一般的三维$G^1$边值条件, 我们先作刚体变换使得起点$\boldsymbol{P}_S$位于原点, 初始切向变换为x轴正向的单位向量$(1,0,0)$并且终点的端切向与xOy平面平行, 这样的变换是非常容易的, 只需要一次平移和旋转即可. \par
+	 变换后的边值条件, 起点和起点端切向即为$\boldsymbol{P}_S=(0,0,0), \boldsymbol{T}_S = (1,0,0)$, 终点的端切向与xOy平面平行. 我们很容易构造一个初始多边形, 使得该多边形生成的B\`ezier曲线满足该$G^1$边值条件, 这样的多边形至少要四个顶点, 可以表示为
+	 \begin{equation}
+	 	\begin{aligned}
+	 		&\boldsymbol{P}_0 = \boldsymbol{P}_S\\
+	 		&\boldsymbol{P}_1 = \boldsymbol{P}_S+\lambda\boldsymbol{T}_S\\
+	 		&\boldsymbol{P}_2 = \boldsymbol{P}_E-\mu\boldsymbol{T}_E\\
+	 		&\boldsymbol{P}_3 = \boldsymbol{P}_E
+	 	\end{aligned}
+	 \end{equation}
+	 其中$\lambda, \mu>0$是可变的常数, 我们可以选择设置为$\lambda = \mu = \Arrowvert\boldsymbol{P}_S\boldsymbol{P}_E\Arrowvert/3$. \par 
+	 接下来, 我们从初始多边形开始进行保边界条件的迭代. 假设当前的多边形顶点按顺序为$\boldsymbol{P}_0, \dots,\boldsymbol{P}_n$, 那么$\boldsymbol{P}_0$和$\boldsymbol{P}_n$的位置不变, $\boldsymbol{P}_1$和$\boldsymbol{P}_{n-1}$的位置只依赖于多边形的边长, 因为它们用于满足端切向条件, 所以从$\boldsymbol{P}_2$开始计算. 假定现有连续的三点$\boldsymbol{P}_{i-1},\boldsymbol{P}_i,\boldsymbol{P}_{i+1}$, 其中$i=2,\dots,n-2$, 我们计算新的$\hat{\boldsymbol{P}}_i$更新该多边形. 我们把多边形相交于顶点$\boldsymbol{P}_i$的边$\boldsymbol{v}_{i-1}$和$\boldsymbol{v}_{i}$的水平, 竖直夹角称为点$\boldsymbol{P}_i$处的水平, 竖直转角, 记为$\theta_i$和$\phi_i$(定义(\ref{EP3D_Def})). 为了在局部满足Euler多边形的条件, 应当让转角满足$2\theta_i = \theta_{i-1}+\theta_{i+1}$, 以及$2\phi_{i} = \phi_{i-1}+\phi_{i+1}$, 因此, 我们更新$\boldsymbol{P}_i$处的转角为:
+	 \begin{equation}
+	 	\begin{aligned}
+	 		&\hat{\theta}_i = \frac{\theta_{i-1}+\theta_i+\theta_{i+1}}3\\
+	 		&\hat{\phi}_i =
+	 		\frac{\phi_{i-1}+\phi_i+\phi_{i+1}}3
+	 	\end{aligned}
+	 \end{equation}
+	 接下来, 我们通过已经更新的$\hat{\theta}_i$和$\hat{\phi}_i$来确定$\hat{\boldsymbol{P}}_i$的位置. 
 	 \subsection{三维Euler B-Spline 曲线}
 		
 		
