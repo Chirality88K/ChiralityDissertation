@@ -301,7 +301,46 @@ linkcolor=black
 	 		\frac{\phi_{i-1}+\phi_i+\phi_{i+1}}3
 	 	\end{aligned}
 	 \end{equation}
-	 接下来, 我们通过已经更新的$\hat{\theta}_i$和$\hat{\phi}_i$来确定$\hat{\boldsymbol{P}}_i$的位置. 
+	 接下来, 我们通过已经更新的$\hat{\theta}_i$和$\hat{\phi}_i$来确定$\hat{\boldsymbol{P}}_i$的位置. 设$\boldsymbol{P}_{i-1}$和$\boldsymbol{P}_{i+1}$的坐标分别为$(x_1,y_1,z_1)$和$(x_2,y_2,z_2)$, $\boldsymbol{P}_{i-1}$和$\boldsymbol{P}_{i+1}$在xOy平面上的投影记为$\bar{\boldsymbol{P}}_{i-1}$和$\bar{\boldsymbol{P}}_{i+1}$, 所求的新$\hat{\boldsymbol{P}}_i$在xOy面上的投影为$\bar{\hat{\boldsymbol{P}}}_i$. 我们要使得$\bar{\boldsymbol{P}}_{i-1}$, $\bar{\hat{\boldsymbol{P}}}_i$和$\bar{\boldsymbol{P}}_{i+1}$三点形成的转角为$\hat{\theta}_i$, 从而点$\bar{\hat{\boldsymbol{P}}}_i$应当位于一段圆弧上, 该圆弧的半径为
+	 \begin{equation}
+	 R = \frac{\Arrowvert\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}\Arrowvert}{2\sin(\hat{\theta}_i)}
+	 \end{equation}
+	 圆心的位置也可以由下式给出
+	 \begin{equation}
+	 C_i = \frac{\bar{\boldsymbol{P}}_{i-1}+\bar{\boldsymbol{P}}_{i+1}}2+\mathrm{R}(\mathrm{sign}(\hat{\theta}_i)\cdot\frac{\pi}2)\cdot\frac{\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}}{\Arrowvert\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}\Arrowvert}\cdot\sqrt{R^2-\frac14\Arrowvert\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}\Arrowvert^2}
+	 \end{equation}
+	 其中$\mathrm{R}(\theta)$表示在xOy平面绕原点旋转$\theta$角度, 注意到$\hat{\theta}_i$是有符号的, 并且圆心与点$\bar{\hat{\boldsymbol{P}}}_i$位于$\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}$的两侧. 将$C_i$的坐标记为$(a,b)$, 从而我们可以设$\bar{\hat{\boldsymbol{P}}}_i=(a+R\cos(x),b+R\sin(x))$, 设$\hat{\boldsymbol{P}}_i=(a+R\cos(x),b+R\sin(x),z)$. \par 
+	 接下来考虑竖直角, 向量$\boldsymbol{P}_{i-1}\hat{\boldsymbol{P}}_i$和$\hat{\boldsymbol{P}}_i\boldsymbol{P}_{i+1}$的俯角应当满足
+	 \begin{equation}
+	 \begin{aligned}
+	 &\tan(\phi_{\boldsymbol{P}_{i-1}\hat{\boldsymbol{P}}_i}) = \frac{z-z_1}{\boldmath{L}_1(x)}\\
+	 &\tan(\phi_{\hat{\boldsymbol{P}}_i\boldsymbol{P}_{i+1}}) = \frac{z_2-z}{\boldmath{L}_2(x)}
+	 \end{aligned}
+	 \end{equation}
+	 其中, $\boldmath{L}_1(x)$和$\boldmath{L}_2(x)$分别表示点$\bar{\hat{\boldsymbol{P}}}_i$到点$\bar{\boldsymbol{P}}_{i-1}$和点$\bar{\boldsymbol{P}}_{i+1}$的距离. 我们要使$\phi_{\hat{\boldsymbol{P}}_i\boldsymbol{P}_{i+1}}-\phi_{\boldsymbol{P}_{i-1}\hat{\boldsymbol{P}}_i}=\hat{\phi_i}$, 从而得到方程
+	 \begin{equation}\label{eq1}
+	 \frac{z_2-z}{\boldmath{L}_2(x)}-\frac{z-z_1}{\boldmath{L}_1(x)} = \tan(\hat{\phi_i})(1+\frac{(z_2-z)(z-z_1)}{\boldmath{L}_1(x)\boldmath{L}_2(x)})
+	 \end{equation}
+	 最后再利用Euler多边形的各边相等, 要有$\Arrowvert\boldsymbol{P}_{i-1}\hat{\boldsymbol{P}}_i\Arrowvert = \Arrowvert\boldsymbol{P}_{i+1}\hat{\boldsymbol{P}}_i\Arrowvert$, 则有方程
+	 \begin{equation}\label{eq2}
+	 \boldmath{L}_1(x)^2+(z-z_1)^2 =\boldmath{L}_2(x)^2+(z_2-z)^2
+	 \end{equation}
+	 注意到式(\ref{eq2})等价于
+	 \begin{equation}
+	 z = \frac{z_1+z_2}2+\frac{\boldmath{L}_1(x)^2-\boldmath{L}_2(x)^2}{2(z_1-z_2)}
+	 \end{equation}
+	 将其代入式(\ref{eq1}), 并记$z_2-z_1 = h$得到
+	 \begin{equation}\label{eq_final}
+	 \begin{aligned}
+	 \boldmath{L}_1(x)(\frac h2+\frac{\boldmath{L}_1(x)^2-\boldmath{L}_2(x)^2}{2h})-\boldmath{L}_2(x)(\frac h2-\frac{\boldmath{L}_1(x)^2-\boldmath{L}_2(x)^2}{2h})\\
+	 -\tan(\hat{\phi_i})(\boldmath{L}_1(x)\boldmath{L}_2(x)+\frac{h^2}4-\frac{(\boldmath{L}_1(x)^2-\boldmath{L}_2(x)^2)^2}{4h^2})=0
+	 \end{aligned}
+	 \end{equation}
+	 将式(\ref{eq_final})左侧的表达式记为$\Phi(x)$, 我们即要求$\Phi(x)$的零点. 
+	 
+	 
+	 
+	 
 	 \subsection{三维Euler B-Spline 曲线}
 		
 		
