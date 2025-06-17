@@ -68,18 +68,21 @@ linkcolor=black
 		\end{abstract}
 		\newpage  
 		\section{二维Euler B\`{e}zier曲线与Euler B-Spline曲线}
-		\begin{definition}[Euler B\`{e}zier曲线]\label{EB_Def}
-			记平面B\`{e}zier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t), t\in[0,1]$,记 向量$\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到向量$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 如果$\boldsymbol{P}(t)$满足
+		\begin{definition}[Euler 多边形]\label{EP2D}
+			如果平面多边形$\boldsymbol{P}_0\dots\boldsymbol{P}_n$满足
 			\begin{equation}
 				\begin{aligned}
 					&(1).\quad \Arrowvert\boldsymbol{P}_i\boldsymbol{P}_{i+1}\Arrowvert(i=0,1,\dots,n-1)\text{是定值};\\
 					&(2).\quad\theta_i(i=1,2,\dots,n-1)\text{是等差数列},
 				\end{aligned}
 			\end{equation}
-			则称曲线$\boldsymbol{P}(t)$是Euler B\`{e}zier曲线, 其控制多边形称为Euler多边形.
+			则称该多边形为Euler多边形.
 		\end{definition}
+	\begin{definition}[Euler B\`{e}zier曲线]\label{EB_Def}
+		如果平面B\`{e}zier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t), t\in[0,1]$的控制多边形是Euler多边形, 则称曲线$\boldsymbol{P}(t)$是Euler B\`{e}zier曲线. 
+	\end{definition}
 		\begin{definition}[Euler B-Spline 曲线]\label{Esp_Def}
-			记平面上的$k$阶均匀节点B-Spline曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,k}(t), t\in[t_{k-1},t_{n+1}]$,节点向量$t_i = i\quad(i=0,1,\dots,n+k)$. 如果其控制多边形$\boldsymbol{P}_i$是Euler多边形(见定义(\ref{EB_Def})), 则称曲线$\boldsymbol{P}(t)$是Euler B-Spline曲线.
+			记平面上的$k$阶均匀节点B-Spline曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,k}(t), t\in[t_{k-1},t_{n+1}]$,节点向量$t_i = i\quad(i=0,1,\dots,n+k)$. 如果其控制多边形$\boldsymbol{P}_i$是Euler多边形, 则称曲线$\boldsymbol{P}(t)$是Euler B-Spline曲线.
 		\end{definition}
 		
 		\begin{figure}[htbp]
@@ -162,9 +165,9 @@ linkcolor=black
 		 	$n++$\;
 		 }
 		 \end{algorithm}
-		 \begin{figure}[htbp]
+		 \begin{figure}[htbp]\label{EB_figure}
 		 	\centering
-		 	\begin{minipage}{0.49\linewidth}{\label{EB_figure}}
+		 	\begin{minipage}{0.49\linewidth}
 		 		\centering
 		 		\includegraphics[width=0.9\linewidth]{figures/SmoothCorner1.png}
 		 	\end{minipage}
@@ -175,6 +178,11 @@ linkcolor=black
 		 	\end{minipage}
 		 	\caption{算法($\ref{smoothcurve1}$)得到的$G^2$连续Euler B\`{e}zier螺线圆角}
 		 \end{figure}
+	 \begin{figure}[htbp]
+	 	\centering
+	 	\includegraphics[width=0.7\linewidth]{figures/SixEdges_EulerBezier.png}
+	 	\caption{图(\ref{EB_figure})中一个圆角曲线的曲率. }
+	 \end{figure}
 	 \subsection{二维Euler B-Spline曲线}
 	 虽然B\`ezier曲线已经能得到满足条件的圆角曲线, 但是通常控制顶点较多导致次数较高, 而使用B-Spline曲线可以保持次数为三次, 方便进行曲线的拼接处理. 利用二维Euler B-Spline曲线构造圆角大体与B\`{e}zier曲线的构造一致, 只是生成Euler多边形时考虑不同的边界条件.  设四阶(三次)均匀B-Spline 曲线为$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,4}(t)$, 节点向量为$t_j = j,j=0,1,\dots,n+4$ \par 
 	 在Euler B\`{e}zier圆角的构造中, 我们将起点$\boldsymbol{P}_0$设置在圆角起点$\boldsymbol{P}_S$上, 我们令向量$\boldsymbol{P}_0\boldsymbol{P}_1$与$\boldsymbol{T}_S$同向, 令$\boldsymbol{P}_0$$\boldsymbol{P}_1$$\boldsymbol{P}_2$三点共线, 这些都是基于B\`{e}zier曲线的端点各阶导数与控制顶点的关系得到的. 而对于所求的均匀节点B-Spline曲线$\boldsymbol{P}(t)$, $t\in[3,n+1]$, 我们有
@@ -232,7 +240,7 @@ linkcolor=black
 	\boldsymbol{D}_k = \sum_{i=0}^{k-1}\text{R}(\phi_i)\boldsymbol{T}_S,\quad k=1,\dots,n
 	\end{equation}
 	对于给定的n, 每个$\boldsymbol{D}_k$都是定值, 最后我们求解$l$, 只需要和B\`ezier的方法类似, 确定了$\boldsymbol{P}_S$或$\boldsymbol{P}_E$的位置后, 通过求解三角形得到$\boldsymbol{P}_S\boldsymbol{P}_E$的长即可. 之后再进行与算法(\ref{smoothcurve1})类似的迭代过程即得到一半的Euler B-Spline圆角曲线, 将其对称并拼接可以得到一整条B-Spline圆角曲线.
-	\begin{figure}[htbp]
+	\begin{figure}[htbp]\label{pentagram}
 		\centering
 		\begin{minipage}{0.49\linewidth}
 			\centering
@@ -245,10 +253,36 @@ linkcolor=black
 		\end{minipage}
 		\caption{\small{对正五角星的每一个角做圆角, 圆角的起点和终点均为各边中点. 左图: 使用Euler B\`ezier曲线生成, 钝角的圆角曲线是两段4次曲线, 锐角的圆角为两段7次曲线. 右图: 使用Euler B-Spline曲线生成, 所有曲线均为三次. 两个例子都表现出了$G^2$连续性, B\`ezier曲线次数更高, 每一段内的几何连续性也更高, B-Spline曲线次数恒定, 但由于拼接, 几何连续性只能达到$G^2$.}}
 	\end{figure}
+\begin{figure}
+	\centering
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{figures/Pentagram_Bezier1.png}
+	\end{minipage}
+	%\qquad
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{figures/Pentagram_Bezier2.png}
+	\end{minipage}
+\caption{\small{图(\ref{pentagram})中两个B\`ezier圆角的曲率}}
+\end{figure}
+\begin{figure}
+	\centering
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{figures/Pentagram_B-Spline1.png}
+	\end{minipage}
+	%\qquad
+	\begin{minipage}{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.7\linewidth]{figures/Pentagram_B-Spline2.png}
+	\end{minipage}
+\caption{\small{图(\ref{pentagram})中两个B-Spline圆角的曲率}}
+\end{figure}
 	 \section{三维Euler B\`{e}zier 曲线与Euler B-Spline 曲线}
 	 \subsection{三维情况的Euler多边形}
 	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明. 现有的一些构造三维螺线的结果有对于离散多边形的非线性细分方法, 有根据Frenet方程的离散形式进行计算的方法, 这些方法得到的都是离散形式的曲线, 需要进行多次迭代, 或者计算大量的采样点, 而我们的目的是使用显式的(分段)多项式曲线来尽可能的构造曲率单调曲线. 我们的方法从生成二维Euler多边形的方法演变而来, 将初始控制多边形的起点和终点以及初始的切向量生成的平面作为xy平面建立三维坐标系, 我们要重新定义三维的Euler多边形. 首先介绍三维情况下两种角的定义方式, 假设有非零的三维向量$\boldsymbol{v}=(v_x,v_y,v_z)$, 将其化为极坐标得到$\hat{\boldsymbol{v}}=(\rho_v,\theta_v,\phi_v)$, 其中$\rho_v>0$是$\boldsymbol{v}$的模长, $\theta_v\in[0,2\pi)$是$\boldsymbol{v}$在xy平面投影向量的极角, $\phi_v\in[-\frac{\pi}2,\frac{\pi}2]$是$\boldsymbol{v}$的仰角, 它们满足等式
-	 \begin{equation}
+	 \begin{equation}\label{angle_compute}
 	 \begin{aligned}
 	 &\rho_v = \sqrt{v_x^2+v_y^2+v_z^2}\\
 	 &\theta_v =
@@ -294,7 +328,7 @@ linkcolor=black
 	 \end{equation}
 	 其中$\lambda, \mu>0$是可变的常数, 我们可以选择设置为$\lambda = \mu = \Arrowvert\boldsymbol{P}_S\boldsymbol{P}_E\Arrowvert/3$. \par 
 	 接下来, 我们从初始多边形开始进行保边界条件的迭代. 假设当前的多边形顶点按顺序为$\boldsymbol{P}_0, \dots,\boldsymbol{P}_n$, 那么$\boldsymbol{P}_0$和$\boldsymbol{P}_n$的位置不变, $\boldsymbol{P}_1$和$\boldsymbol{P}_{n-1}$的位置只依赖于多边形的边长, 因为它们用于满足端切向条件, 所以从$\boldsymbol{P}_2$开始计算. 假定现有连续的三点$\boldsymbol{P}_{i-1},\boldsymbol{P}_i,\boldsymbol{P}_{i+1}$, 其中$i=2,\dots,n-2$, 我们计算新的$\hat{\boldsymbol{P}}_i$更新该多边形. 我们把多边形相交于顶点$\boldsymbol{P}_i$的边$\boldsymbol{v}_{i-1}$和$\boldsymbol{v}_{i}$的水平, 竖直夹角称为点$\boldsymbol{P}_i$处的水平, 竖直转角, 记为$\theta_i$和$\phi_i$(定义(\ref{EP3D_Def})). 为了在局部满足Euler多边形的条件, 应当让转角满足$2\theta_i = \theta_{i-1}+\theta_{i+1}$, 以及$2\phi_{i} = \phi_{i-1}+\phi_{i+1}$, 因此, 我们更新$\boldsymbol{P}_i$处的转角为:
-	 \begin{equation}
+	 \begin{equation}\label{new_theta}
 	 	\begin{aligned}
 	 		&\hat{\theta}_i = \frac{\theta_{i-1}+\theta_i+\theta_{i+1}}3\\
 	 		&\hat{\phi}_i =
@@ -302,11 +336,11 @@ linkcolor=black
 	 	\end{aligned}
 	 \end{equation}
 	 接下来, 我们通过已经更新的$\hat{\theta}_i$和$\hat{\phi}_i$来确定$\hat{\boldsymbol{P}}_i$的位置. 设$\boldsymbol{P}_{i-1}$和$\boldsymbol{P}_{i+1}$的坐标分别为$(x_1,y_1,z_1)$和$(x_2,y_2,z_2)$, $\boldsymbol{P}_{i-1}$和$\boldsymbol{P}_{i+1}$在xOy平面上的投影记为$\bar{\boldsymbol{P}}_{i-1}$和$\bar{\boldsymbol{P}}_{i+1}$, 所求的新$\hat{\boldsymbol{P}}_i$在xOy面上的投影为$\bar{\hat{\boldsymbol{P}}}_i$. 我们要使得$\bar{\boldsymbol{P}}_{i-1}$, $\bar{\hat{\boldsymbol{P}}}_i$和$\bar{\boldsymbol{P}}_{i+1}$三点形成的转角为$\hat{\theta}_i$, 从而点$\bar{\hat{\boldsymbol{P}}}_i$应当位于一段圆弧上, 该圆弧的半径为
-	 \begin{equation}
+	 \begin{equation}\label{R}
 	 R = \frac{\Arrowvert\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}\Arrowvert}{2\sin(\hat{\theta}_i)}
 	 \end{equation}
 	 圆心的位置也可以由下式给出
-	 \begin{equation}
+	 \begin{equation}\label{center}
 	 C_i = \frac{\bar{\boldsymbol{P}}_{i-1}+\bar{\boldsymbol{P}}_{i+1}}2+\mathrm{R}(\mathrm{sign}(\hat{\theta}_i)\cdot\frac{\pi}2)\cdot\frac{\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}}{\Arrowvert\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}\Arrowvert}\cdot\sqrt{R^2-\frac14\Arrowvert\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}\Arrowvert^2}
 	 \end{equation}
 	 其中$\mathrm{R}(\theta)$表示在xOy平面绕原点旋转$\theta$角度, 注意到$\hat{\theta}_i$是有符号的, 并且圆心与点$\bar{\hat{\boldsymbol{P}}}_i$位于$\bar{\boldsymbol{P}}_{i-1}\bar{\boldsymbol{P}}_{i+1}$的两侧. 将$C_i$的坐标记为$(a,b)$, 从而我们可以设$\bar{\hat{\boldsymbol{P}}}_i=(a+R\cos(x),b+R\sin(x))$, 设$\hat{\boldsymbol{P}}_i=(a+R\cos(x),b+R\sin(x),z)$. \par 
@@ -336,8 +370,56 @@ linkcolor=black
 	 -\tan(\hat{\phi_i})(\boldmath{L}_1(x)\boldmath{L}_2(x)+\frac{h^2}4-\frac{(\boldmath{L}_1(x)^2-\boldmath{L}_2(x)^2)^2}{4h^2})=0
 	 \end{aligned}
 	 \end{equation}
-	 将式(\ref{eq_final})左侧的表达式记为$\Phi(x)$, 我们即要求$\Phi(x)$的零点. 
-	 
+	 将式(\ref{eq_final})左侧的表达式记为$\Phi(x)$, 我们即要求$\Phi(x)$的零点. \par 
+	 求得了满足条件的$x$后, 可以代入求得$\hat{\boldsymbol{P}}_i$的坐标, 用新坐标更新顶点序列的$\boldsymbol{P}_i$, 之后对于下一个顶点重复上述步骤. 最后计算$\boldsymbol{P}_1, \boldsymbol{P}_{n-1}$的值, 我们计算当前多边形的平均边长$\bar{L}$, 令$\boldsymbol{P}_1 = \boldsymbol{P}_0+\bar{L}\boldsymbol{T}_S$, $\boldsymbol{P}_{n-1} = \boldsymbol{P}_n-\bar{L}\boldsymbol{T}_E$计算出所有顶点. \par 
+	 每当对所有顶点完成一次迭代, 我们计算当前的角度误差量
+	 \begin{equation}\label{error}
+	 \begin{aligned}
+	 &E_{\theta} = \max_{2\leq i\leq n-2}|2\theta_i-\theta_{i-1}-\theta_{i+1}|\\
+	 &E_{\phi} = \max_{2\leq i\leq n-2}|2\phi_i-\phi_{i-1}-\phi_{i+1}|
+	 \end{aligned}
+	 \end{equation}
+	 以及所有边长长度的标准差$\sigma_L$, 为这三个量分别设定阈值, 不断迭代直到三个量均小于阈值, 此时可以认为多边形是近似的Euler多边形. 迭代的过程中顶点数是不会增加的, 我们在每一次迭代至满足要求后对多边形升阶, 再迭代得到更逼近的结果, 升阶的方法为
+	 \begin{equation}
+	 \hat{\boldsymbol{P}}_i = \boldsymbol{P}_{i-1}\cdot\frac{i}{n+1}+\boldsymbol{P}_{i}\cdot(1-\frac{i}{n+1}), i=0,1,\dots,n+1
+	 \end{equation}
+	 经过迭代和升阶, 最终可以得到满足要求的曲线, 该算法的伪代码表示见算法(\ref{smoothcurve3})
+	 \IncMargin{1em}
+	 \begin{algorithm}
+	 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	 	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+	 	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	 	\caption{3D Euler B\`{e}zier 曲线}\label{smoothcurve3}
+	 	\KwData{初始的三维控制多边形$\boldsymbol{P}_0\dots\boldsymbol{P}_m$, 最大迭代次数$\mathrm{max\_n}$. }
+	 	\KwResult{
+	 		与初始曲线有相同$G^1$边值条件的Euler Bezier曲线. }
+	 	\BlankLine 
+	 	$n=m-1$\;
+	 	求旋转矩阵$\boldmath{R}$, 使旋转后的两端切向与xOy平面平行\;
+	 	将旋转后的多边形重新记为$\boldsymbol{P}_0\dots\boldsymbol{P}_m$, 用$\boldsymbol{T}_S, \boldsymbol{T}_E$表示起终点单位切向\;
+	 	声明两个角度序列AngleTheta[n], AnglePhi[n]\;
+	 	AngleTheta[0]=0.0, AngleTheta[n-1]=0.0\;
+	 	AnglePhi[0]=0.0, AnglePhi[n-1]=0.0\;
+	 	\For{$\mathrm{(i=1;i<n-1;i=i+1)}
+	 		$}
+	 	{根据式(\ref{angle_compute})计算AngleTheta[i], AnglePhi[i]\;}
+	 	\While{$\mathrm{(n<=max_n)}$}{
+	 		E\_theta = 10.0, E\_phi = 10.0, sigma\_L = 10.0\;
+	 		s\_count = 1\;
+	 		max\_count = 10000\;
+	 		\While{$\mathrm{(s\_count<max\_count \&\& (E\_theta>1e-6 || E\_phi>1e-6 || sigma\_L>1e-6))}$}{\For{$\mathrm{(i=2;i<n-2;i=i+1)}
+	 				$}{AngleTheta[i] = (AngleTheta[i-1]+AngleTheta[i]+AngleTheta[i+1])/3\;
+	 				AnglePhi[i] = (AnglePhi[i-1]+AnglePhi[i]+AnglePhi[i+1])/3\;
+	 				根据式(\ref{R}),(\ref{center})计算相关量\;
+	 				求解方程(\ref{eq_final}), 更新$\boldsymbol{P}_i$\;}
+ 				s\_count +=1\;
+ 				根据式(\ref{error})计算E\_theta , E\_phi\;
+ 				计算边长的标准差sigma\_L\;
+ 			}
+	 		$n++$\;
+	 	}
+ 	将得到的多边形作$\boldmath{R}$的逆变换, 得到满足条件的曲线.
+	 \end{algorithm}
 	 
 	 
 	 
