@@ -67,7 +67,7 @@ linkcolor=black
 		\noindent{\bf 关键词: }关键词1 关键词2 关键词3 ... 
 		\end{abstract}
 		\newpage  
-		\section{二维Euler B\`{e}zier曲线与Euler B-Spline曲线}
+		\section{平面Euler B\'{e}zier曲线与Euler B-Spline曲线}
 		\begin{definition}[Euler 多边形]\label{EP2D}
 			如果平面多边形$\boldsymbol{P}_0\dots\boldsymbol{P}_n$满足
 			\begin{equation}
@@ -78,8 +78,8 @@ linkcolor=black
 			\end{equation}
 			则称该多边形为Euler多边形.
 		\end{definition}
-	\begin{definition}[Euler B\`{e}zier曲线]\label{EB_Def}
-		如果平面B\`{e}zier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t), t\in[0,1]$的控制多边形是Euler多边形, 则称曲线$\boldsymbol{P}(t)$是Euler B\`{e}zier曲线. 
+	\begin{definition}[Euler B\'{e}zier曲线]\label{EB_Def}
+		如果平面B\'{e}zier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t), t\in[0,1]$的控制多边形是Euler多边形, 则称曲线$\boldsymbol{P}(t)$是Euler B\'{e}zier曲线. 
 	\end{definition}
 		\begin{definition}[Euler B-Spline 曲线]\label{Esp_Def}
 			记平面上的$k$阶均匀节点B-Spline曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,k}(t), t\in[t_{k-1},t_{n+1}]$,节点向量$t_i = i\quad(i=0,1,\dots,n+k)$. 如果其控制多边形$\boldsymbol{P}_i$是Euler多边形, 则称曲线$\boldsymbol{P}(t)$是Euler B-Spline曲线.
@@ -100,14 +100,14 @@ linkcolor=black
 		\end{figure}
 		
 		
-		\section{利用Euler B\`{e}zier曲线和Euler B-Spline曲线构造G2连续圆角曲线}
-		\subsection{二维Euler B\`{e}zier曲线}
-		对于一个给定的多边形, 对转角做圆角处理是非常常见的需求, 传统的方法是使用圆弧, 通过确定圆弧的半径来控制圆角的程度. 由于圆弧是固定曲率的, 这种传统的方法只能构造$G^1$连续的圆角, 使用Euler B\`{e}zier曲线则可以构造出$G^2$连续的圆角曲线, 并且可以保证有且仅有一个曲率极值点.\par
-		考虑多边形的一个转角$\boldsymbol{ABC}$, 向量$\boldsymbol{AB}$到向量$\boldsymbol{BC}$的旋转角为$\alpha, |\alpha|\in(0,\pi)$, 我们对转角$\boldsymbol{B}$构造圆角曲线. 由于Euler B\`{e}zier螺线是曲率单调的, 而多边形的圆角曲线要达到$G^2$连续需要保证两端的曲率为0, 所以我们使用对称的两条Euler B\`{e}zier螺线拼接得到圆角曲线. 设圆角曲线的起点$\boldsymbol{P}_S$在边$\boldsymbol{AB}$上, 由于要构造对称的两条曲线, 我们把一边曲线的终点$\boldsymbol{P}_E$取在多边形的内角平分线上. 为保证$G^1$连续, 起点$\boldsymbol{P}_S$处的切方向为向量$\boldsymbol{AB}$的方向, 记为$\boldsymbol{T}_S = \boldsymbol{AB}/\Arrowvert\boldsymbol{AB}\Arrowvert$. 终点$\boldsymbol{P}_E$处的切向$\boldsymbol{T}_E$应当与多边形的内角平分线垂直. 假设B\`ezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t),t\in[0,1]$插值了这两个边界条件, $\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 那么可以得到
+		\section{利用Euler B\'{e}zier曲线和Euler B-Spline曲线构造G2连续圆角曲线}
+		\subsection{平面Euler B\'{e}zier曲线}
+		对于一个给定的多边形, 对转角做圆角处理是非常常见的需求, 传统的方法是使用圆弧, 通过确定圆弧的半径来控制圆角的程度. 由于圆弧是固定曲率的, 这种传统的方法只能构造$G^1$连续的圆角, 使用Euler B\'{e}zier曲线则可以构造出$G^2$连续的圆角曲线, 并且可以保证有且仅有一个曲率极值点.\par
+		考虑多边形的一个转角$\boldsymbol{ABC}$, 向量$\boldsymbol{AB}$到向量$\boldsymbol{BC}$的旋转角为$\alpha, |\alpha|\in(0,\pi)$, 我们对转角$\boldsymbol{B}$构造圆角曲线. 由于Euler B\'{e}zier螺线是曲率单调的, 而多边形的圆角曲线要达到$G^2$连续需要保证两端的曲率为0, 所以我们使用对称的两条Euler B\'{e}zier螺线拼接得到圆角曲线. 设圆角曲线的起点$\boldsymbol{P}_S$在边$\boldsymbol{AB}$上, 由于要构造对称的两条曲线, 我们把一边曲线的终点$\boldsymbol{P}_E$取在多边形的内角平分线上. 为保证$G^1$连续, 起点$\boldsymbol{P}_S$处的切方向为向量$\boldsymbol{AB}$的方向, 记为$\boldsymbol{T}_S = \boldsymbol{AB}/\Arrowvert\boldsymbol{AB}\Arrowvert$. 终点$\boldsymbol{P}_E$处的切向$\boldsymbol{T}_E$应当与多边形的内角平分线垂直. 假设B\'ezier曲线$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iB_{i,n}(t),t\in[0,1]$插值了这两个边界条件, $\boldsymbol{P}_i\boldsymbol{P}_{i+1}$到$\boldsymbol{P}_{i+1}\boldsymbol{P}_{i+2}$的角为$\theta_{i+1}(i=0,1,\dots,n-2)$. 那么可以得到
 		\begin{equation}
 			\prod_{i=1}^{n-1}\text{R}(\theta_i)\boldsymbol{T}_S =  \boldsymbol{T}_E
 		\end{equation}
-		其中$\text{R}(\theta)$表示旋转角为$\theta$的旋转矩阵. 根据定义($\ref{EB_Def}$), $\theta_i$应当为等差数列. 考虑B\`ezier曲线的起点曲率$$\kappa(0)=\frac{n-1}{n}\frac{\sin(\theta_1)}{l}$$
+		其中$\text{R}(\theta)$表示旋转角为$\theta$的旋转矩阵. 根据定义($\ref{EB_Def}$), $\theta_i$应当为等差数列. 考虑B\'ezier曲线的起点曲率$$\kappa(0)=\frac{n-1}{n}\frac{\sin(\theta_1)}{l}$$
 		保证$G^2$连续要令$\kappa(0)=0$, 则有$\theta_1=0$, 故设$\theta_i=(i-1)\Delta\theta(i=1,\dots,n-1)$, 为了保证对称性, $\boldsymbol{T}_E$应当与多边形内角平分线垂直, 则$\boldsymbol{T}_S$到$\boldsymbol{T}_E$的夹角为$\alpha/2$, 所以有
 		\begin{equation}
 			\sum_{i=1}^{n-1}\theta_i = \frac{(n-2)(n-1)}2\Delta\theta = \frac{\alpha}2
@@ -129,25 +129,25 @@ linkcolor=black
 		\begin{equation}\label{sinthoery}
 			\frac{\Arrowvert\boldsymbol{OP}_S\Arrowvert}{\cos(\frac{\alpha}2-\beta)}=\frac{\Arrowvert\boldsymbol{OP}_E\Arrowvert}{\sin(\beta)}=\frac{\Arrowvert\boldsymbol{P}_S\boldsymbol{P}_E\Arrowvert}{\cos(\frac{\alpha}2)}
 		\end{equation}
-		根据方程$(\ref{sinthoery})$, 我们可以在给定圆角起点$\boldsymbol{P}_S$或者给定角平分线上的经过点$\boldsymbol{P}_E$时求得唯一的Euler多边形. 对于n+1个顶点的Euler多边形, 判断以它们为控制顶点的B\`{e}zier曲线是否为Euler B\`{e}zier曲线, 如果没有满足Euler B\`{e}zier曲线的条件, 则使n自加一再次重复上述过程, 直到满足Euler B\`{e}zier曲线的条件或者控制顶点数达到了预先设定的最大值停止迭代. 如果迭代结束曲线满足了螺线条件, 就得到了一半的圆角曲线. 再将该曲线沿着转角的平分线作对称变换即可得到另一半圆角曲线, 该算法的伪代码实现见Algorithm \ref{smoothcurve1}.\par 
+		根据方程$(\ref{sinthoery})$, 我们可以在给定圆角起点$\boldsymbol{P}_S$或者给定角平分线上的经过点$\boldsymbol{P}_E$时求得唯一的Euler多边形. 对于n+1个顶点的Euler多边形, 判断以它们为控制顶点的B\'{e}zier曲线是否为Euler B\'{e}zier曲线, 如果没有满足Euler B\'{e}zier曲线的条件, 则使n自加一再次重复上述过程, 直到满足Euler B\'{e}zier曲线的条件或者控制顶点数达到了预先设定的最大值停止迭代. 如果迭代结束曲线满足了螺线条件, 就得到了一半的圆角曲线. 再将该曲线沿着转角的平分线作对称变换即可得到另一半圆角曲线, 该算法的伪代码实现见Algorithm \ref{smoothcurve1}.\par 
 		图\ref{EB_figure}是对正六边形(黑色直线段)应用Algorithm \ref{smoothcurve1}的结果, 六个圆角曲线(品红色)均为对称的两条四次B\`ezier曲线拼接而成, 其圆角起点与终点都是六边形边的三等分点. 图中的浅蓝色曲率梳表明了该圆角的$G^2$连续性, 并且每一个圆角曲线自身对称, 有且仅有一个曲率极值点, 位于对称轴上.
 		\IncMargin{1em}
 		 \begin{algorithm}
 		 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 		 	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 		 	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-		 	\caption{Euler B\`{e}zier圆角}\label{smoothcurve1}
+		 	\caption{Euler B\'{e}zier圆角}\label{smoothcurve1}
 		 	\KwData{ 构成Corner的三个顶点$\boldsymbol{A},\boldsymbol{B},\boldsymbol{C}$, $\boldsymbol{BP}_S$的长度$L_S$或$\boldsymbol{BP}_E$的长度$L_E$}
 		 	\KwResult{
-		 	Bezier曲线$\boldsymbol{P}(t)$的控制顶点序列$\boldsymbol{P}_0,\boldsymbol{P}_1,\dots,\boldsymbol{P}_n$和对称的顶点序列}
+		 	B\'ezier曲线$\boldsymbol{P}(t)$的控制顶点序列$\boldsymbol{P}_0,\boldsymbol{P}_1,\dots,\boldsymbol{P}_n$和对称的顶点序列}
 		 	\BlankLine 
 		 	 $n=4$\;
-		 	 \bf{初始化B\`{e}zier曲线}$\boldsymbol{P}(t)$\;
+		 	 \bf{初始化B\'{e}zier曲线}$\boldsymbol{P}(t)$\;
 		 	$\boldsymbol{T}_S = \text{Normalize}(\boldsymbol{B}-\boldsymbol{P}_S)$\;
 		 	$\boldsymbol{D}=\boldsymbol{T}_S$\;
 		 	$\boldsymbol{temp}=\boldsymbol{T}_S$\;
 		 	
-		 	\While{\text{EulerB\`{e}zierSpiralCheck}($\boldsymbol{P}(t)$)==\text{FALSE} and $n < 20$}{
+		 	\While{\text{EulerB\'{e}zierSpiralCheck}($\boldsymbol{P}(t)$)==\text{FALSE} and $n < 20$}{
 	计算$\boldsymbol{A}\boldsymbol{B}$与$\boldsymbol{B}\boldsymbol{C}$的夹角$\alpha$\;
 		 	$\Delta\theta = \frac{\alpha}{ (n - 2)  (n - 1)}$\;
 		 	\For{$i=0,1,\dots,n-2$}{
@@ -183,9 +183,9 @@ linkcolor=black
 	 	\includegraphics[width=0.7\linewidth]{figures/SixEdges_EulerBezier.png}
 	 	\caption{图(\ref{EB_figure})中一个圆角曲线的曲率. }
 	 \end{figure}
-	 \subsection{二维Euler B-Spline曲线}
-	 虽然B\`ezier曲线已经能得到满足条件的圆角曲线, 但是通常控制顶点较多导致次数较高, 而使用B-Spline曲线可以保持次数为三次, 方便进行曲线的拼接处理. 利用二维Euler B-Spline曲线构造圆角大体与B\`{e}zier曲线的构造一致, 只是生成Euler多边形时考虑不同的边界条件.  设四阶(三次)均匀B-Spline 曲线为$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,4}(t)$, 节点向量为$t_j = j,j=0,1,\dots,n+4$ \par 
-	 在Euler B\`{e}zier圆角的构造中, 我们将起点$\boldsymbol{P}_0$设置在圆角起点$\boldsymbol{P}_S$上, 我们令向量$\boldsymbol{P}_0\boldsymbol{P}_1$与$\boldsymbol{T}_S$同向, 令$\boldsymbol{P}_0$$\boldsymbol{P}_1$$\boldsymbol{P}_2$三点共线, 这些都是基于B\`{e}zier曲线的端点各阶导数与控制顶点的关系得到的. 而对于所求的均匀节点B-Spline曲线$\boldsymbol{P}(t)$, $t\in[3,n+1]$, 我们有
+	 \subsection{平面Euler B-Spline曲线}
+	 虽然B\'ezier曲线已经能得到满足条件的圆角曲线, 但是通常控制顶点较多导致次数较高, 而使用B-Spline曲线可以保持次数为三次, 方便进行曲线的拼接处理. 利用二维Euler B-Spline曲线构造圆角大体与B\'{e}zier曲线的构造一致, 只是生成Euler多边形时考虑不同的边界条件.  设四阶(三次)均匀B-Spline 曲线为$\boldsymbol{P}(t)=\sum_{i=0}^n\boldsymbol{P}_iN_{i,4}(t)$, 节点向量为$t_j = j,j=0,1,\dots,n+4$ \par 
+	 在Euler B\'{e}zier圆角的构造中, 我们将起点$\boldsymbol{P}_0$设置在圆角起点$\boldsymbol{P}_S$上, 我们令向量$\boldsymbol{P}_0\boldsymbol{P}_1$与$\boldsymbol{T}_S$同向, 令$\boldsymbol{P}_0$$\boldsymbol{P}_1$$\boldsymbol{P}_2$三点共线, 这些都是基于B\'{e}zier曲线的端点各阶导数与控制顶点的关系得到的. 而对于所求的均匀节点B-Spline曲线$\boldsymbol{P}(t)$, $t\in[3,n+1]$, 我们有
 	 \begin{equation}
 	 \begin{aligned}
 	 &\boldsymbol{P}(3)=\frac{\boldsymbol{P}_0+4\boldsymbol{P}_1+\boldsymbol{P}_2}6\\
@@ -239,7 +239,7 @@ linkcolor=black
 	其中\begin{equation}
 	\boldsymbol{D}_k = \sum_{i=0}^{k-1}\text{R}(\phi_i)\boldsymbol{T}_S,\quad k=1,\dots,n
 	\end{equation}
-	对于给定的n, 每个$\boldsymbol{D}_k$都是定值, 最后我们求解$l$, 只需要和B\`ezier的方法类似, 确定了$\boldsymbol{P}_S$或$\boldsymbol{P}_E$的位置后, 通过求解三角形得到$\boldsymbol{P}_S\boldsymbol{P}_E$的长即可. 之后再进行与算法(\ref{smoothcurve1})类似的迭代过程即得到一半的Euler B-Spline圆角曲线, 将其对称并拼接可以得到一整条B-Spline圆角曲线.
+	对于给定的n, 每个$\boldsymbol{D}_k$都是定值, 最后我们求解$l$, 只需要和B\'ezier的方法类似, 确定了$\boldsymbol{P}_S$或$\boldsymbol{P}_E$的位置后, 通过求解三角形得到$\boldsymbol{P}_S\boldsymbol{P}_E$的长即可. 之后再进行与算法(\ref{smoothcurve1})类似的迭代过程即得到一半的Euler B-Spline圆角曲线, 将其对称并拼接可以得到一整条B-Spline圆角曲线.
 	\begin{figure}[htbp]\label{pentagram}
 		\centering
 		\begin{minipage}{0.49\linewidth}
@@ -251,7 +251,7 @@ linkcolor=black
 			\centering
 			\includegraphics[width=0.9\linewidth]{figures/SmoothingCorner4.png}
 		\end{minipage}
-		\caption{\small{对正五角星的每一个角做圆角, 圆角的起点和终点均为各边中点. 左图: 使用Euler B\`ezier曲线生成, 钝角的圆角曲线是两段4次曲线, 锐角的圆角为两段7次曲线. 右图: 使用Euler B-Spline曲线生成, 所有曲线均为三次. 两个例子都表现出了$G^2$连续性, B\`ezier曲线次数更高, 每一段内的几何连续性也更高, B-Spline曲线次数恒定, 但由于拼接, 几何连续性只能达到$G^2$.}}
+		\caption{\small{对正五角星的每一个角做圆角, 圆角的起点和终点均为各边中点. 左图: 使用Euler B\'ezier曲线生成, 钝角的圆角曲线是两段4次曲线, 锐角的圆角为两段7次曲线. 右图: 使用Euler B-Spline曲线生成, 所有曲线均为三次. 两个例子都表现出了$G^2$连续性, B\'ezier曲线次数更高, 每一段内的几何连续性也更高, B-Spline曲线次数恒定, 但由于拼接, 几何连续性只能达到$G^2$.}}
 	\end{figure}
 \begin{figure}
 	\centering
@@ -264,7 +264,7 @@ linkcolor=black
 		\centering
 		\includegraphics[width=0.7\linewidth]{figures/Pentagram_Bezier2.png}
 	\end{minipage}
-\caption{\small{图(\ref{pentagram})中两个B\`ezier圆角的曲率}}
+\caption{\small{图(\ref{pentagram})中两个B\'ezier圆角的曲率}}
 \end{figure}
 \begin{figure}
 	\centering
@@ -279,8 +279,13 @@ linkcolor=black
 	\end{minipage}
 \caption{\small{图(\ref{pentagram})中两个B-Spline圆角的曲率}}
 \end{figure}
-	 \section{三维Euler B\`{e}zier 曲线与Euler B-Spline 曲线}
-	 \subsection{三维情况的Euler多边形}
+	 \section{空间Euler B\'{e}zier 曲线与Euler B-Spline 曲线}
+	 \subsection{空间Euler螺线}
+	 平面的各种螺线很早以前就有各种定义和性质的研究, 一般而言可以概括为曲率$\kappa(s)^{\alpha} = as+b$, 即曲率的某个方幂与弧长是线性关系, 这样的曲线其显著特征就是曲率的单调性. 在空间中也有一些对于螺线的定义, 比较严格的定义是把空间Euler螺线定义为曲率$\kappa$, 挠率$\tau$均与弧长呈线性关系的曲线, 即满足$\kappa(s) = as+b,\quad\tau(s) = cs+d$, 其中$a,b,c,d$均是常数. 事实上, 根据曲线论的第一基本定理可知, 给定了常数$a,b,c,d$后, 这样定义的空间Euler螺线一定存在, 并且在相差一个刚体运动的意义下是唯一的. 不过, 直接试图求解这样的曲线并不是好的选择, 一方面它需要求解Frenet微分方程组得到离散结果, 不能得到准确的参数化表示, 更不能表示成NURBS曲线; 另一方面是实际应用中往往要构造满足$G^1$边值条件的曲线, 在这种情况下这样严格定义的曲线未必是存在的. 所以我们先弱化了空间Euler螺线的定义
+	 \begin{definition}[空间Euler螺线]
+	 	设$\boldsymbol{P}(t), t\in[t_0,t_1]$是空间中的一段曲线, 设$s$为其弧长参数, 如果其曲率$\kappa(s)$和挠率$\tau(s)$都是单调函数, 则称$\boldsymbol{P}(t)$是空间Euler螺线.
+	 \end{definition}
+	 \subsection{空间Euler多边形}
 	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明. 现有的一些构造三维螺线的结果有对于离散多边形的非线性细分方法, 有根据Frenet方程的离散形式进行计算的方法, 这些方法得到的都是离散形式的曲线, 需要进行多次迭代, 或者计算大量的采样点, 而我们的目的是使用显式的(分段)多项式曲线来尽可能的构造曲率单调曲线. 我们的方法从生成二维Euler多边形的方法演变而来, 将初始控制多边形的起点和终点以及初始的切向量生成的平面作为xy平面建立三维坐标系, 我们要重新定义三维的Euler多边形. 首先介绍三维情况下两种角的定义方式, 假设有非零的三维向量$\boldsymbol{v}=(v_x,v_y,v_z)$, 将其化为极坐标得到$\hat{\boldsymbol{v}}=(\rho_v,\theta_v,\phi_v)$, 其中$\rho_v>0$是$\boldsymbol{v}$的模长, $\theta_v\in[0,2\pi)$是$\boldsymbol{v}$在xy平面投影向量的极角, $\phi_v\in[-\frac{\pi}2,\frac{\pi}2]$是$\boldsymbol{v}$的仰角, 它们满足等式
 	 \begin{equation}\label{angle_compute}
 	 \begin{aligned}
@@ -300,8 +305,8 @@ linkcolor=black
 	 \end{aligned}
 	 \right.
 	 \end{aligned}
-	 \end{equation} 对于一个三维多边形$\boldsymbol{P}_0,\dots,\boldsymbol{P}_n$, 它的n条边$\boldsymbol{P}_i\boldsymbol{P}_{i+1}$记为向量$\boldsymbol{v}_i(0\leq i\leq n-1)$, 其极坐标表示的极角和俯角记为$\theta_{v_i}, \phi_{v_i}$, 记相邻边$\boldsymbol{v}_i, \boldsymbol{v}_{i+1}$的水平夹角为$\theta_i = \theta_{v_{i+1}}-\theta_{v_i}$, 相邻边$\boldsymbol{v}_i, \boldsymbol{v}_{i+1}$的竖直夹角为$\phi_i = \phi_{v_{i+1}}-\phi_{v_i}$, $0\leq i\leq n-2$我们使用这两种角定义三维的Euler多边形.
-	 \begin{definition}[三维Euler多边形]\label{EP3D_Def}
+	 \end{equation} 对于一个空间多边形$\boldsymbol{P}_0,\dots,\boldsymbol{P}_n$, 它的n条边$\boldsymbol{P}_i\boldsymbol{P}_{i+1}$记为向量$\boldsymbol{v}_i(0\leq i\leq n-1)$, 其极坐标表示的极角和俯角记为$\theta_{v_i}, \phi_{v_i}$, 记相邻边$\boldsymbol{v}_i, \boldsymbol{v}_{i+1}$的水平夹角为$\theta_i = \theta_{v_{i+1}}-\theta_{v_i}$, 相邻边$\boldsymbol{v}_i, \boldsymbol{v}_{i+1}$的竖直夹角为$\phi_i = \phi_{v_{i+1}}-\phi_{v_i}$, $0\leq i\leq n-2$我们使用这两种角定义三维的Euler多边形.
+	 \begin{definition}[空间Euler多边形]\label{EP3D_Def}
 	 	
 	 	设三维空间中有多边形$\boldsymbol{P}_0,\dots,\boldsymbol{P}_n$, 顶点互不相同, 如果它们的相邻边的水平夹角$\theta_i$, 竖直夹角$\phi_i$满足:
 	 	\begin{equation}
@@ -313,9 +318,9 @@ linkcolor=black
 	 	\end{equation}
 	 	则称$\boldsymbol{P}_0,\dots,\boldsymbol{P}_n$是三维Euler多边形.
 	 \end{definition}
-	 由三维Euler多边形作为控制顶点生成的B\`ezier曲线或整数节点B样条曲线称为三维Euler B\`ezier曲线或三维Euler B-Spline曲线. \par 
-	 假定有三维$G^1$条件: 起点$\boldsymbol{P}_S$, 终点$\boldsymbol{P}_E$, 以及起点终点切向$\boldsymbol{T}_S$, $\boldsymbol{T}_E$, 其中$\boldsymbol{T}_S$, $\boldsymbol{T}_E$是单位向量, 并且与起点指向终点的向量$\boldsymbol{P}_S\boldsymbol{P}_E$, 三个向量异面. 对于这样的$G^1$条件, 直接构造严格满足定义(\ref{EP3D_Def})的曲线是行不通的, 事实上在二维情况下都是不可行的, 所以我们依然使用一种非线性细分的方法对初始多边形进行迭代, 使其逐渐逼近三维的Euler多边形, 当然没有理论保证对于任意的边值条件都存在满足定义(\ref{EP3D_Def})的多边形, 但是如果这样的多边形存在, 我们的方法可以很好的逼近出这样的多边形, 以它们作为控制顶点的B\`ezier和B-Spline曲线是曲率单调的.
-	 \subsection{三维Euler B\`{e}zier 曲线}
+	 由空间Euler多边形作为控制顶点生成的B\'ezier曲线或整数节点B样条曲线称为空间Euler B\'ezier曲线或空间Euler B-Spline曲线. \par 
+	 假定有三维$G^1$条件: 起点$\boldsymbol{P}_S$, 终点$\boldsymbol{P}_E$, 以及起点终点切向$\boldsymbol{T}_S$, $\boldsymbol{T}_E$, 其中$\boldsymbol{T}_S$, $\boldsymbol{T}_E$是单位向量, 并且与起点指向终点的向量$\boldsymbol{P}_S\boldsymbol{P}_E$, 三个向量异面. 对于这样的$G^1$条件, 直接构造严格满足定义(\ref{EP3D_Def})的曲线是行不通的, 事实上在二维情况下都是不可行的, 所以我们依然使用一种非线性细分的方法对初始多边形进行迭代, 使其逐渐逼近三维的Euler多边形, 当然没有理论保证对于任意的边值条件都存在满足定义(\ref{EP3D_Def})的多边形, 但是如果这样的多边形存在, 我们的方法可以很好的逼近出这样的多边形, 以它们作为控制顶点的B\'ezier和B-Spline曲线是曲率单调的.
+	 \subsection{空间Euler B\'{e}zier 曲线}
 	 对于一般的三维$G^1$边值条件, 我们先作刚体变换使得起点$\boldsymbol{P}_S$位于原点, 初始切向变换为x轴正向的单位向量$(1,0,0)$并且终点的端切向与xOy平面平行, 这样的变换是非常容易的, 只需要一次平移和旋转即可. \par
 	 变换后的边值条件, 起点和起点端切向即为$\boldsymbol{P}_S=(0,0,0), \boldsymbol{T}_S = (1,0,0)$, 终点的端切向与xOy平面平行. 我们很容易构造一个初始多边形, 使得该多边形生成的B\`ezier曲线满足该$G^1$边值条件, 这样的多边形至少要四个顶点, 可以表示为
 	 \begin{equation}
@@ -389,10 +394,10 @@ linkcolor=black
 	 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 	 	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 	 	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-	 	\caption{3D Euler B\`{e}zier 曲线}\label{smoothcurve3}
+	 	\caption{3D Euler B\'{e}zier 曲线}\label{smoothcurve3}
 	 	\KwData{初始的三维控制多边形$\boldsymbol{P}_0\dots\boldsymbol{P}_m$, 最大迭代次数$\mathrm{max\_n}$. }
 	 	\KwResult{
-	 		与初始曲线有相同$G^1$边值条件的Euler Bezier曲线. }
+	 		与初始曲线有相同$G^1$边值条件的Euler B\'ezier曲线. }
 	 	\BlankLine 
 	 	$n=m-1$\;
 	 	求旋转矩阵$\boldmath{R}$, 使旋转后的两端切向与xOy平面平行\;
@@ -423,7 +428,7 @@ linkcolor=black
 	 
 	 
 	 
-	 \subsection{三维Euler B-Spline 曲线}
+	 \subsection{空间Euler B-Spline 曲线}
 		
 		
 		\renewcommand\refname{参考文献}
