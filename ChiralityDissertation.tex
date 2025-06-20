@@ -14,6 +14,13 @@
 \usepackage{float}
 
 \usepackage{graphicx} % 图片 
+\usepackage{svg}
+% \svgsetup{
+%     inkscapepath=i/svg-inkscape/
+% }
+% \svgpath{{svg/}}
+
+\svgsetup{inkscapelatex=false} % keep original font and size
 \usepackage{url} % 超链接 
 
 \usepackage{multirow} % 表格
@@ -425,7 +432,34 @@ linkcolor=black
 	 	}
  	将得到的多边形作$\boldmath{R}$的逆变换, 得到满足条件的曲线.
 	 \end{algorithm}
-	 
+	 \begin{figure}[ht]
+	 	\centering
+	 	\label{seven color bezier}
+	 	\begin{minipage}[b]{0.45\textwidth} % 左半部分
+	 		\centering
+	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier.png}\\
+	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Front.png}
+	 	\end{minipage}\hfill
+	 	\begin{minipage}[b]{0.45\textwidth} % 右半部分
+	 		\centering
+	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Top.png}\\
+	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Right.png}
+	 	\end{minipage}
+	 	\caption{七段Euler B\'ezier曲线$G^1$拼接而成. }
+	 \end{figure}
+ 	\begin{figure}[ht]
+ 		\centering
+ 		\label{seven color bezier_table}
+ 		\begin{minipage}[b]{0.45\textwidth} % 左半部分
+ 			\centering
+ 			\includesvg[width=\textwidth]{figures/seven_colors_curvature_bezier.svg}
+ 		\end{minipage}\hfill
+ 		\begin{minipage}[b]{0.45\textwidth} % 右半部分
+ 			\centering
+ 			\includesvg[width=\textwidth]{figures/seven_colors_torsion_bezier.svg}
+ 		\end{minipage}
+ 		\caption{左: 图(\ref{seven color bezier})中七段曲线的曲率; 右: 图(\ref{seven color bezier})中七段曲线的挠率. }
+ 	\end{figure}
 	 
 	 
 	 \subsection{空间Euler B-Spline 曲线}
