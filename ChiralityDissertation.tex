@@ -295,8 +295,25 @@ linkcolor=black
 	 事实上, 根据曲线论的第一基本定理可知, 给定了常数$a,b,c,d$后, 这样定义的空间Euler螺线一定存在, 并且在相差一个刚体运动的意义下是唯一的. 不过, 直接试图求解这样的曲线并不是好的选择, 一方面它需要求解Frenet微分方程组得到离散结果, 不能得到准确的参数化表示, 更不能表示成NURBS曲线; 另一方面是实际应用中往往要构造满足$G^1$边值条件的曲线, 在这种情况下这样严格定义的曲线未必是存在的. 所以我们将空间Euler螺线的几何性质离散化, 计算出一个可以逼近Euler螺线的离散多边形, 再利用B样条曲线或B\'ezier曲线能逼近多边形控制顶点的性质, 来构造能准确参数化的多项式曲线. 因此我们和平面有类似的方法, 引入空间Euler多边形.
 	
 	 \subsection{空间Euler多边形}
-	 将空间Euler螺线按弧长参数均匀采样点会得到一个多边形, 我们可以去在多边形中寻找一些离散的量作为曲线曲率和挠率连续量的近似. 曲率反映了切向的变化速度, 因此我们可以用边之间的角度大小来衡量曲率的大小, 但是不同于二维情况, 三维的曲率是没有正负号, 即曲率向量的方向可以是任意的, 但是角度的大小不能体现这一点, 所以我们把空间的Euler多边形看作平面的Euler多边形“扭曲”得到的.
-	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明. 现有的一些构造三维螺线的结果有对于离散多边形的非线性细分方法, 有根据Frenet方程的离散形式进行计算的方法, 这些方法得到的都是离散形式的曲线, 需要进行多次迭代, 或者计算大量的采样点, 而我们的目的是使用显式的(分段)多项式曲线来尽可能的构造曲率单调曲线. 我们的方法从生成二维Euler多边形的方法演变而来, 将初始控制多边形的起点和终点以及初始的切向量生成的平面作为xy平面建立三维坐标系, 我们要重新定义三维的Euler多边形. 首先介绍三维情况下两种角的定义方式, 假设有非零的三维向量$\boldsymbol{v}=(v_x,v_y,v_z)$, 将其化为极坐标得到$\hat{\boldsymbol{v}}=(\rho_v,\theta_v,\phi_v)$, 其中$\rho_v>0$是$\boldsymbol{v}$的模长, $\theta_v\in[0,2\pi)$是$\boldsymbol{v}$在xy平面投影向量的极角, $\phi_v\in[-\frac{\pi}2,\frac{\pi}2]$是$\boldsymbol{v}$的仰角, 它们满足等式
+	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明. 现有的一些构造三维螺线的结果有对于离散多边形的非线性细分方法, 有根据Frenet方程的离散形式进行计算的方法, 这些方法得到的都是离散形式的曲线, 需要进行多次迭代, 或者计算大量的采样点, 而我们的目的是使用显式的(分段)多项式曲线来尽可能的构造曲率单调曲线. 将空间Euler螺线按弧长参数均匀采样点会得到一个多边形, 我们可以去在多边形中寻找一些离散的量作为曲线曲率和挠率连续量的近似. 曲率反映了切向的变化速度, 因此我们可以用边之间的角度大小来衡量曲率的大小, 但是不同于二维情况, 三维的曲率是没有正负号, 即曲率向量的方向可以是任意的, 但是角度的大小不能体现这一点, 所以我们把空间的Euler多边形看作平面的Euler多边形“扭曲”得到的. 我们使用多边形相邻边的两种角度来反映曲率和挠率, 一种是将两条边投影到xOy平面上, 投影后两向量的符号角度, 定义为“水平角度”; 另一种是两条边的俯仰角的差值, 定义为“竖直角”, 参见图(\ref{explain})\par 
+	 \begin{figure}[ht]
+	 	\centering
+	 	\label{explain}
+	 	\begin{minipage}[b]{0.33\textwidth} % 左半部分
+	 		\centering
+	 		\includegraphics[width=\textwidth]{figures/explain_angle_main.png}
+	 	\end{minipage}\hfill
+	 	\begin{minipage}[b]{0.33\textwidth} % 右半部分
+	 		\centering
+	 		\includegraphics[width=\textwidth]{figures/explain_angle_top.png}
+	 	\end{minipage}
+ 	\begin{minipage}[b]{0.33\textwidth} % 右半部分
+ 		\centering
+ 		\includegraphics[width=\textwidth]{figures/explain_angle_front.png}
+ 	\end{minipage}
+	 	\caption{两种角度. }
+	 \end{figure}
+	  下面给出两种角的严格定义. 假设有非零的三维向量$\boldsymbol{v}=(v_x,v_y,v_z)$, 将其化为极坐标得到$\hat{\boldsymbol{v}}=(\rho_v,\theta_v,\phi_v)$, 其中$\rho_v>0$是$\boldsymbol{v}$的模长, $\theta_v\in[0,2\pi)$是$\boldsymbol{v}$在xy平面投影向量的极角, $\phi_v\in[-\frac{\pi}2,\frac{\pi}2]$是$\boldsymbol{v}$的仰角, 它们满足等式
 	 \begin{equation}\label{angle_compute}
 	 \begin{aligned}
 	 &\rho_v = \sqrt{v_x^2+v_y^2+v_z^2}\\
@@ -366,7 +383,28 @@ linkcolor=black
 	 &\tan(\phi_{\hat{\boldsymbol{P}}_i\boldsymbol{P}_{i+1}}) = \frac{z_2-z}{\boldmath{L}_2(x)}
 	 \end{aligned}
 	 \end{equation}
-	 其中, $\boldmath{L}_1(x)$和$\boldmath{L}_2(x)$分别表示点$\bar{\hat{\boldsymbol{P}}}_i$到点$\bar{\boldsymbol{P}}_{i-1}$和点$\bar{\boldsymbol{P}}_{i+1}$的距离. 我们要使$\phi_{\hat{\boldsymbol{P}}_i\boldsymbol{P}_{i+1}}-\phi_{\boldsymbol{P}_{i-1}\hat{\boldsymbol{P}}_i}=\hat{\phi_i}$, 从而得到方程
+	 其中, $\boldmath{L}_1(x)$和$\boldmath{L}_2(x)$分别表示点$\bar{\hat{\boldsymbol{P}}}_i$到点$\bar{\boldsymbol{P}}_{i-1}$和点$\bar{\boldsymbol{P}}_{i+1}$的距离.
+	 
+	 \begin{figure}[ht]
+	 	\centering
+	 	\label{algorithm_explain}
+	 	\begin{minipage}[b]{0.33\textwidth} % 
+	 		\centering
+	 		\includegraphics[width=\textwidth]{figures/al_main.png}
+	 	\end{minipage}\hfill
+	 	\begin{minipage}[b]{0.33\textwidth} % 
+	 		\centering
+	 		\includegraphics[width=\textwidth]{figures/al_top.png}
+	 	\end{minipage}
+ 	\begin{minipage}[b]{0.33\textwidth} % 
+ 	\centering
+ 	\includegraphics[width=\textwidth]{figures/al_front.png}
+ \end{minipage}
+	 	\caption{算法图解. }
+	 \end{figure}
+	 
+	 
+	  我们要使$\phi_{\hat{\boldsymbol{P}}_i\boldsymbol{P}_{i+1}}-\phi_{\boldsymbol{P}_{i-1}\hat{\boldsymbol{P}}_i}=\hat{\phi_i}$, 从而得到方程
 	 \begin{equation}\label{eq1}
 	 \frac{z_2-z}{\boldmath{L}_2(x)}-\frac{z-z_1}{\boldmath{L}_1(x)} = \tan(\hat{\phi_i})(1+\frac{(z_2-z)(z-z_1)}{\boldmath{L}_1(x)\boldmath{L}_2(x)})
 	 \end{equation}
