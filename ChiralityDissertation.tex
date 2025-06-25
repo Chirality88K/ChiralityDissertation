@@ -388,18 +388,14 @@ linkcolor=black
 	 \begin{figure}[ht]
 	 	\centering
 	 	\label{algorithm_explain}
-	 	\begin{minipage}[b]{0.33\textwidth} % 
+	 	\begin{minipage}[b]{0.45\textwidth} % 
 	 		\centering
-	 		\includegraphics[width=\textwidth]{figures/al_main.png}
+	 		\includegraphics[width=\textwidth]{figures/al_main_bold.png}
 	 	\end{minipage}\hfill
-	 	\begin{minipage}[b]{0.33\textwidth} % 
+	 	\begin{minipage}[b]{0.45\textwidth} % 
 	 		\centering
-	 		\includegraphics[width=\textwidth]{figures/al_top.png}
+	 		\includegraphics[width=\textwidth]{figures/al_top_bold.png}
 	 	\end{minipage}
- 	\begin{minipage}[b]{0.33\textwidth} % 
- 	\centering
- 	\includegraphics[width=\textwidth]{figures/al_front.png}
- \end{minipage}
 	 	\caption{算法图解. }
 	 \end{figure}
 	 
@@ -424,6 +420,27 @@ linkcolor=black
 	 \end{aligned}
 	 \end{equation}
 	 将式(\ref{eq_final})左侧的表达式记为$\Phi(x)$, 我们即要求$\Phi(x)$的零点. \par 
+	 关于函数$\Phi(x)$的零点, 我们可以证明在一定条件下零点是存在的(但是不一定唯一), 我们令$L$表示点$\bar{\boldsymbol{P}}_{i-1}$到点$\bar{\boldsymbol{P}}_{i+1}$的距离, 我们注意到当点$\bar{\hat{\boldsymbol{P}}}_i$与$\bar{\boldsymbol{P}}_{i-1}$重合时, $\boldmath{L}_1(x)$的值为0, $\boldmath{L}_2(x)$的值为$L$, 将此时的$x$的值记为$x_1$; 同理记另一端极限情况的$x$的值为$x_2$, 满足$\boldmath{L}_1(x_2)=L, \boldmath{L}_2(x_2)=0$, 不妨假设$x_1<x_2$. 我们可以得到一个使解存在的充分条件
+	 \begin{theorem}
+	 	若$|h|<L$, 则关于$x$的方程(\ref{eq_final})在区间$[x_1,x_2]$上一定有解. 
+	 \end{theorem}
+{\indent\bf 证明} \par 考虑函数$\Phi(x)$在区间端点和中点处的取值, 我们有
+\begin{equation}
+\begin{aligned}
+&\Phi(x_1) = \frac{h^2+L^2}4[\tan(\hat{\phi}_i)(\frac Lh)^2-2(\frac Lh)-\tan(\hat{\phi}_i)]\\
+&\Phi(x_2) = \frac{h^2+L^2}4[\tan(\hat{\phi}_i)(\frac Lh)^2+2(\frac Lh)-\tan(\hat{\phi}_i)]\\
+&\Phi(x_0) = -\tan(\hat{\phi}_i)(L_0^2+\frac{h^2}4)
+\end{aligned}
+\end{equation}
+其中$x_0 = \frac{x_1+x_2}2$, 根据几何性质显然有$\boldmath{L}_1(x_0) = \boldmath{L}_2(x_0)$, $L_0$表示这一对相等的长度. \par 
+我们不妨假设$\hat{\phi}_i\in(0,\frac{\pi}2)$, 记函数$\boldmath{F}_1(x) = \tan(\hat{\phi}_i)x^2-2x-\tan(\hat{\phi}_i)$, $\boldmath{F}_2(x) = \tan(\hat{\phi}_i)x^2+2x-\tan(\hat{\phi}_i)$, 两个函数的图像如图
+\begin{figure}[h]
+	\centering
+	\includegraphics[width = 0.6\textwidth]{figures/f1f2.png}
+\end{figure}
+ 两函数共有四个零点, 我们可以求得它们从小到大分别为$$-\frac{1}{\tan(\frac{\hat{\phi}_i}2)}, -\tan(\frac{\hat{\phi}_i}2),\tan(\frac{\hat{\phi}_i}2),\frac 1{\tan(\frac{\hat{\phi}_i}2)}. $$
+ 如果$L/h$的值在图中$AB$或$CD$之间, 即若$\tan(\frac{\hat{\phi}_i}2)<|L/h|<\frac 1{\tan(\frac{\hat{\phi}_i}2)}$, 则$\Phi(x_1)\Phi(x_2)<0$, 那么方程(\ref{eq_final})显然有解. 如果$|L/h|> 1/\tan(\frac{\hat{\phi}_i}2)$, 那么$\Phi(x_1), \Phi(x_2)>0$, 而$\Phi(x_0)<0$, 从而方程(\ref{eq_final})仍然有解. 也就是说, 只要$|L/h|>\tan(\frac{\hat{\phi}_i}2)$, 解就一定存在, 由于我们可以细分多边形使得$\hat{\phi}_i<\pi/2$, 从而$\tan({\hat{\phi}_i}/2)<1$, 结论成立.
+ $\square$\par 
 	 求得了满足条件的$x$后, 可以代入求得$\hat{\boldsymbol{P}}_i$的坐标, 用新坐标更新顶点序列的$\boldsymbol{P}_i$, 之后对于下一个顶点重复上述步骤. 最后计算$\boldsymbol{P}_1, \boldsymbol{P}_{n-1}$的值, 我们计算当前多边形的平均边长$\bar{L}$, 令$\boldsymbol{P}_1 = \boldsymbol{P}_0+\bar{L}\boldsymbol{T}_S$, $\boldsymbol{P}_{n-1} = \boldsymbol{P}_n-\bar{L}\boldsymbol{T}_E$计算出所有顶点. \par 
 	 每当对所有顶点完成一次迭代, 我们计算当前的角度误差量
 	 \begin{equation}\label{error}
