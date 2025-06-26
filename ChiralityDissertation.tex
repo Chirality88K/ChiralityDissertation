@@ -59,8 +59,9 @@
 colorlinks=true,
 linkcolor=black
 } % 使目录为黑色字
-\counterwithin{figure}{section}
+%\counterwithin{figure}{section}
 \numberwithin{figure}{section}
+\numberwithin{equation}{section}
 
 \begin{document}  
 		\maketitle
@@ -448,6 +449,7 @@ linkcolor=black
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.6\textwidth]{figures/f1f2.png}
+	\caption{函数$\boldmath{F}_1(x), \boldmath{F}_2(x)$的图像. }
 	\label{f1f2}
 \end{figure}
  两函数共有四个零点, 我们可以求得它们从小到大分别为$$-\frac{1}{\tan(\frac{\hat{\phi}_i}2)}, -\tan(\frac{\hat{\phi}_i}2),\tan(\frac{\hat{\phi}_i}2),\frac 1{\tan(\frac{\hat{\phi}_i}2)}. $$
