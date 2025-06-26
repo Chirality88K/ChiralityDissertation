@@ -59,6 +59,9 @@
 colorlinks=true,
 linkcolor=black
 } % 使目录为黑色字
+\counterwithin{figure}{section}
+\numberwithin{figure}{section}
+
 \begin{document}  
 		\maketitle
 		\renewcommand{\contentsname}{目录} 
@@ -75,6 +78,7 @@ linkcolor=black
 		\end{abstract}
 		\newpage  
 		\section{平面Euler B\'{e}zier曲线与Euler B-Spline曲线}
+		
 		\begin{definition}[Euler 多边形]\label{EP2D}
 			如果平面多边形$\boldsymbol{P}_0\dots\boldsymbol{P}_n$满足
 			\begin{equation}
@@ -137,7 +141,7 @@ linkcolor=black
 			\frac{\Arrowvert\boldsymbol{OP}_S\Arrowvert}{\cos(\frac{\alpha}2-\beta)}=\frac{\Arrowvert\boldsymbol{OP}_E\Arrowvert}{\sin(\beta)}=\frac{\Arrowvert\boldsymbol{P}_S\boldsymbol{P}_E\Arrowvert}{\cos(\frac{\alpha}2)}
 		\end{equation}
 		根据方程$(\ref{sinthoery})$, 我们可以在给定圆角起点$\boldsymbol{P}_S$或者给定角平分线上的经过点$\boldsymbol{P}_E$时求得唯一的Euler多边形. 对于n+1个顶点的Euler多边形, 判断以它们为控制顶点的B\'{e}zier曲线是否为Euler B\'{e}zier曲线, 如果没有满足Euler B\'{e}zier曲线的条件, 则使n自加一再次重复上述过程, 直到满足Euler B\'{e}zier曲线的条件或者控制顶点数达到了预先设定的最大值停止迭代. 如果迭代结束曲线满足了螺线条件, 就得到了一半的圆角曲线. 再将该曲线沿着转角的平分线作对称变换即可得到另一半圆角曲线, 该算法的伪代码实现见Algorithm \ref{smoothcurve1}.\par 
-		图\ref{EB_figure}是对正六边形(黑色直线段)应用Algorithm \ref{smoothcurve1}的结果, 六个圆角曲线(品红色)均为对称的两条四次B\`ezier曲线拼接而成, 其圆角起点与终点都是六边形边的三等分点. 图中的浅蓝色曲率梳表明了该圆角的$G^2$连续性, 并且每一个圆角曲线自身对称, 有且仅有一个曲率极值点, 位于对称轴上.
+		图(\ref{EB_figure})是对正六边形(黑色直线段)应用Algorithm \ref{smoothcurve1}的结果, 六个圆角曲线(品红色)均为对称的两条四次B\`ezier曲线拼接而成, 其圆角起点与终点都是六边形边的三等分点. 图中的浅蓝色曲率梳表明了该圆角的$G^2$连续性, 并且每一个圆角曲线自身对称, 有且仅有一个曲率极值点, 位于对称轴上.
 		\IncMargin{1em}
 		 \begin{algorithm}
 		 	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
@@ -172,7 +176,7 @@ linkcolor=black
 		 	$n++$\;
 		 }
 		 \end{algorithm}
-		 \begin{figure}[htbp]\label{EB_figure}
+		 \begin{figure}[htbp]
 		 	\centering
 		 	\begin{minipage}{0.49\linewidth}
 		 		\centering
@@ -183,7 +187,9 @@ linkcolor=black
 		 		\centering
 		 		\includegraphics[width=0.9\linewidth]{figures/SmoothCorner2.png}
 		 	\end{minipage}
+	 	
 		 	\caption{算法($\ref{smoothcurve1}$)得到的$G^2$连续Euler B\`{e}zier螺线圆角}
+		 	\label{EB_figure}
 		 \end{figure}
 	 \begin{figure}[htbp]
 	 	\centering
@@ -247,7 +253,7 @@ linkcolor=black
 	\boldsymbol{D}_k = \sum_{i=0}^{k-1}\text{R}(\phi_i)\boldsymbol{T}_S,\quad k=1,\dots,n
 	\end{equation}
 	对于给定的n, 每个$\boldsymbol{D}_k$都是定值, 最后我们求解$l$, 只需要和B\'ezier的方法类似, 确定了$\boldsymbol{P}_S$或$\boldsymbol{P}_E$的位置后, 通过求解三角形得到$\boldsymbol{P}_S\boldsymbol{P}_E$的长即可. 之后再进行与算法(\ref{smoothcurve1})类似的迭代过程即得到一半的Euler B-Spline圆角曲线, 将其对称并拼接可以得到一整条B-Spline圆角曲线.
-	\begin{figure}[htbp]\label{pentagram}
+	\begin{figure}[htbp]
 		\centering
 		\begin{minipage}{0.49\linewidth}
 			\centering
@@ -258,7 +264,9 @@ linkcolor=black
 			\centering
 			\includegraphics[width=0.9\linewidth]{figures/SmoothingCorner4.png}
 		\end{minipage}
+	
 		\caption{\small{对正五角星的每一个角做圆角, 圆角的起点和终点均为各边中点. 左图: 使用Euler B\'ezier曲线生成, 钝角的圆角曲线是两段4次曲线, 锐角的圆角为两段7次曲线. 右图: 使用Euler B-Spline曲线生成, 所有曲线均为三次. 两个例子都表现出了$G^2$连续性, B\'ezier曲线次数更高, 每一段内的几何连续性也更高, B-Spline曲线次数恒定, 但由于拼接, 几何连续性只能达到$G^2$.}}
+		\label{pentagram}
 	\end{figure}
 \begin{figure}
 	\centering
@@ -298,7 +306,7 @@ linkcolor=black
 	 三维空间中插值$G^1$边界条件的曲率(以及挠率)单调曲线的存在性不像二维的情形有简单且完整的理论证明. 现有的一些构造三维螺线的结果有对于离散多边形的非线性细分方法, 有根据Frenet方程的离散形式进行计算的方法, 这些方法得到的都是离散形式的曲线, 需要进行多次迭代, 或者计算大量的采样点, 而我们的目的是使用显式的(分段)多项式曲线来尽可能的构造曲率单调曲线. 将空间Euler螺线按弧长参数均匀采样点会得到一个多边形, 我们可以去在多边形中寻找一些离散的量作为曲线曲率和挠率连续量的近似. 曲率反映了切向的变化速度, 因此我们可以用边之间的角度大小来衡量曲率的大小, 但是不同于二维情况, 三维的曲率是没有正负号, 即曲率向量的方向可以是任意的, 但是角度的大小不能体现这一点, 所以我们把空间的Euler多边形看作平面的Euler多边形“扭曲”得到的. 我们使用多边形相邻边的两种角度来反映曲率和挠率, 一种是将两条边投影到xOy平面上, 投影后两向量的符号角度, 定义为“水平角度”; 另一种是两条边的俯仰角的差值, 定义为“竖直角”, 参见图(\ref{explain})\par 
 	 \begin{figure}[ht]
 	 	\centering
-	 	\label{explain}
+	 	
 	 	\begin{minipage}[b]{0.33\textwidth} % 左半部分
 	 		\centering
 	 		\includegraphics[width=\textwidth]{figures/explain_angle_main.png}
@@ -311,7 +319,9 @@ linkcolor=black
  		\centering
  		\includegraphics[width=\textwidth]{figures/explain_angle_front.png}
  	\end{minipage}
+
 	 	\caption{\small{左, 中, 右分别是一段空间多边形角点$\boldsymbol{ABC}$的标准视图, 顶视图和主视图,  $\boldsymbol{A}'$,$\boldsymbol{B}'$,$\boldsymbol{C}'$分别为三点在xOy平面的投影. $\boldsymbol{A}'\boldsymbol{B}'$与$\boldsymbol{B}'\boldsymbol{C}'$的夹角$\alpha$定义为多边形角点$\boldsymbol{B}$的水平角$\theta_{\boldsymbol{B}}$. $\beta$和$\gamma$分别是向量$\boldsymbol{AB}$, $\boldsymbol{BC}$与xOy平面的夹角, 我们定义点$\boldsymbol{B}$处的竖直角$\phi_{\boldsymbol{B}}=\gamma-\beta$. }}
+	 	 \label{explain}
 	 \end{figure}
 	  下面给出两种角的严格定义. 假设有非零的三维向量$\boldsymbol{v}=(v_x,v_y,v_z)$, 将其化为极坐标得到$\hat{\boldsymbol{v}}=(\rho_v,\theta_v,\phi_v)$, 其中$\rho_v>0$是$\boldsymbol{v}$的模长, $\theta_v\in[0,2\pi)$是$\boldsymbol{v}$在xy平面投影向量的极角, $\phi_v\in[-\frac{\pi}2,\frac{\pi}2]$是$\boldsymbol{v}$的仰角, 它们满足等式
 	 \begin{equation}\label{angle_compute}
@@ -387,7 +397,7 @@ linkcolor=black
 	 
 	 \begin{figure}[ht]
 	 	\centering
-	 	\label{algorithm_explain}
+	 
 	 	\begin{minipage}[b]{0.45\textwidth} % 
 	 		\centering
 	 		\includegraphics[width=\textwidth]{figures/al_main_bold.png}
@@ -397,6 +407,7 @@ linkcolor=black
 	 		\includegraphics[width=\textwidth]{figures/al_top_bold.png}
 	 	\end{minipage}
 	 	\caption{算法图解. }
+	 	\label{algorithm_explain}
 	 \end{figure}
 	 
 	 
@@ -433,10 +444,11 @@ linkcolor=black
 \end{aligned}
 \end{equation}
 其中$x_0 = \frac{x_1+x_2}2$, 根据几何性质显然有$\boldmath{L}_1(x_0) = \boldmath{L}_2(x_0)$, $L_0$表示这一对相等的长度. \par 
-我们不妨假设$\hat{\phi}_i\in(0,\frac{\pi}2)$, 记函数$\boldmath{F}_1(x) = \tan(\hat{\phi}_i)x^2-2x-\tan(\hat{\phi}_i)$, $\boldmath{F}_2(x) = \tan(\hat{\phi}_i)x^2+2x-\tan(\hat{\phi}_i)$, 两个函数的图像如图
+我们不妨假设$\hat{\phi}_i\in(0,\frac{\pi}2)$, 记函数$\boldmath{F}_1(x) = \tan(\hat{\phi}_i)x^2-2x-\tan(\hat{\phi}_i)$, $\boldmath{F}_2(x) = \tan(\hat{\phi}_i)x^2+2x-\tan(\hat{\phi}_i)$, 两个函数的图像如图(\ref{f1f2}), 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width = 0.6\textwidth]{figures/f1f2.png}
+	\label{f1f2}
 \end{figure}
  两函数共有四个零点, 我们可以求得它们从小到大分别为$$-\frac{1}{\tan(\frac{\hat{\phi}_i}2)}, -\tan(\frac{\hat{\phi}_i}2),\tan(\frac{\hat{\phi}_i}2),\frac 1{\tan(\frac{\hat{\phi}_i}2)}. $$
  如果$L/h$的值在图中$AB$或$CD$之间, 即若$\tan(\frac{\hat{\phi}_i}2)<|L/h|<\frac 1{\tan(\frac{\hat{\phi}_i}2)}$, 则$\Phi(x_1)\Phi(x_2)<0$, 那么方程(\ref{eq_final})显然有解. 如果$|L/h|> 1/\tan(\frac{\hat{\phi}_i}2)$, 那么$\Phi(x_1), \Phi(x_2)>0$, 而$\Phi(x_0)<0$, 从而方程(\ref{eq_final})仍然有解. 也就是说, 只要$|L/h|>\tan(\frac{\hat{\phi}_i}2)$, 解就一定存在, 由于我们可以细分多边形使得$\hat{\phi}_i<\pi/2$, 从而$\tan({\hat{\phi}_i}/2)<1$, 结论成立.
@@ -490,37 +502,82 @@ linkcolor=black
 	 	}
  	将得到的多边形作$\boldmath{R}$的逆变换, 得到满足条件的曲线.
 	 \end{algorithm}
-	 \begin{figure}[ht]
-	 	\centering
-	 	\label{seven color bezier}
-	 	\begin{minipage}[b]{0.45\textwidth} % 左半部分
-	 		\centering
-	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier.png}\\
-	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Front.png}
-	 	\end{minipage}\hfill
-	 	\begin{minipage}[b]{0.45\textwidth} % 右半部分
-	 		\centering
-	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Top.png}\\
-	 		\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Right.png}
-	 	\end{minipage}
-	 	\caption{七段Euler B\'ezier曲线$G^1$拼接而成. }
-	 \end{figure}
- 	\begin{figure}[ht]
- 		\centering
- 		\label{seven color bezier_table}
- 		\begin{minipage}[b]{0.45\textwidth} % 左半部分
- 			\centering
- 			\includesvg[width=\textwidth]{figures/seven_colors_curvature_bezier.svg}
- 		\end{minipage}\hfill
- 		\begin{minipage}[b]{0.45\textwidth} % 右半部分
- 			\centering
- 			\includesvg[width=\textwidth]{figures/seven_colors_torsion_bezier.svg}
- 		\end{minipage}
- 		\caption{左: 图(\ref{seven color bezier})中七段曲线的曲率; 右: 图(\ref{seven color bezier})中七段曲线的挠率. }
- 	\end{figure}
+	 
 	 
 	 
 	 \subsection{空间Euler B-Spline 曲线}
+		我们只要适当修改上面算法中对于边界的处理就可以构造空间Euler B-Spline曲线. 输入初始的控制多边形$\boldsymbol{P}_0\dots\boldsymbol{P}_n$后, 我们依然按照算法(\ref{smoothcurve3})中迭代的方法计算$\boldsymbol{P}_2,\dots,\boldsymbol{P}_{n-2}$, 我们只需要修改对于剩余四个边界点的计算.\par 
+		注意Euler B-Spline的定义是均匀节点的B样条, 为了满足$G^1$条件, 我们要有\begin{equation}
+		\begin{aligned}
+		\frac{\boldsymbol{P}_0+4\boldsymbol{P}_1+\boldsymbol{P}_2}6 = \boldsymbol{P}_S\\
+		\boldsymbol{P}_2-\boldsymbol{P}_0 = \lambda\boldsymbol{T}_S并
+		\end{aligned}
+		\end{equation}
+		其中$\lambda>0$待定, 由于$\Arrowvert\boldsymbol{P}_0\boldsymbol{P}_1\Arrowvert=\Arrowvert\boldsymbol{P}_1\boldsymbol{P}_2\Arrowvert$, 我们可以得到关于$\lambda$的方程
+		\begin{equation}
+		\Arrowvert\frac32\boldsymbol{P}_2\boldsymbol{P}_S+\frac{5\lambda}4\boldsymbol{T}_S\Arrowvert=\Arrowvert\frac32\boldsymbol{P}_2\boldsymbol{P}_S+\frac{\lambda}4\boldsymbol{T}_S\Arrowvert
+		\end{equation}
+		求解该方程得到$\lambda = 2\boldsymbol{P}_S\boldsymbol{P}_2\cdot\boldsymbol{T}_S$, 从而计算得到边界点
+		\begin{equation}
+		\begin{aligned}
+		&\boldsymbol{P}_0 = \boldsymbol{P}_2-(2\boldsymbol{P}_S\boldsymbol{P}_2\cdot\boldsymbol{T}_S)\boldsymbol{T}_S\\
+		&\boldsymbol{P}_1 = \frac32\boldsymbol{P}_S-\frac12\boldsymbol{P}_2+\frac{\boldsymbol{P}_S\boldsymbol{P}_2\cdot\boldsymbol{T}_S}2\boldsymbol{T}_S
+		\end{aligned}
+		\end{equation}
+		同样的过程求得另一端的边界点
+		\begin{equation}
+		\begin{aligned}
+		&\boldsymbol{P}_n = \boldsymbol{P}_{n-2}-(2\boldsymbol{P}_E\boldsymbol{P}_{n-2}\cdot\boldsymbol{T}_E)\boldsymbol{T}_E\\
+		&\boldsymbol{P}_{n-1} = \frac32\boldsymbol{P}_E-\frac12\boldsymbol{P}_{n-2}+\frac{\boldsymbol{P}_E\boldsymbol{P}_{n-2}\cdot\boldsymbol{T}_E}2\boldsymbol{T}_E
+		\end{aligned}
+		\end{equation}
+		其余的过程和构造Euler B\'ezier曲线是一致的, 两个方法的主要原理都是B\'ezier或B-Spline曲线会随着控制顶点的增多逐渐逼近控制多边形, 从而逼近我们定义的Euler多边形. 
+		\section{实验结果}
+		图(\ref{seven color bezier})展示了七段曲线拼接而成的一段$G^1$连续的空间曲线, 其曲率是单调增加的, 形状接近圆锥螺线. 使用B\'ezier和B-Spline两种方法得到的结果无法直接观察出差异, 图(\ref{seven color bezier_table})和图(\ref{seven color bspline_table})均匀采样了曲线的曲率和挠率, 可以看出三次的B-Spline曲线挠率是不连续的, 每一段B\'ezier曲线挠率是连续单调的, 两者的曲率接近$G^2$连续, 且整体是单调的. 
+		\begin{figure}[ht]
+			\centering
+			
+			\begin{minipage}[b]{0.45\textwidth} % 左半部分
+				\centering
+				\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier.png}\\
+				\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Front.png}
+			\end{minipage}\hfill
+			\begin{minipage}[b]{0.45\textwidth} % 右半部分
+				\centering
+				\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Top.png}\\
+				\includegraphics[width=\textwidth]{figures/Seven_Color_Bezier_Right.png}
+			\end{minipage}
+			\caption{七段Euler B\'ezier曲线$G^1$拼接而成. }
+			\label{seven color bezier}
+		\end{figure}
+		\begin{figure}[ht]
+			\centering
+			
+			\begin{minipage}[b]{0.4\textwidth} % 左半部分
+				\centering
+				\includesvg[width=\textwidth]{figures/seven_colors_curvature_bezier.svg}
+			\end{minipage}\hfill
+			\begin{minipage}[b]{0.4\textwidth} % 右半部分
+				\centering
+				\includesvg[width=\textwidth]{figures/seven_colors_torsion_bezier.svg}
+			\end{minipage}
+			\caption{左: 图(\ref{seven color bezier})中七段B\'ezier曲线的曲率; 右: 图(\ref{seven color bezier})中七段B\'ezier曲线的挠率. }
+			\label{seven color bezier_table}
+		\end{figure}
+	
+	\begin{figure}[h]
+		\centering
+		\begin{minipage}[b]{0.4\textwidth} % 左半部分
+			\centering
+			\includesvg[width=\textwidth]{figures/seven_colors_curvature_bspline.svg}
+		\end{minipage}\hfill
+		\begin{minipage}[b]{0.4\textwidth} % 右半部分
+			\centering
+			\includesvg[width=\textwidth]{figures/seven_colors_torsion_bspline.svg}
+		\end{minipage}
+		\caption{左: 图(\ref{seven color bezier})中七段B-spline曲线的曲率; 右: 图(\ref{seven color bezier})中七段B-Spline曲线的挠率. }
+		\label{seven color bspline_table}
+	\end{figure}
 		
 		
 		\renewcommand\refname{参考文献}
